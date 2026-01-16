@@ -3,7 +3,7 @@ import { Router } from 'express'
 import type { Services } from '../services'
 import { Page } from '../services/auditService'
 
-export default function routes({ auditService, exampleService }: Services): Router {
+export default function routes({ auditService }: Services): Router {
   const router = Router()
 
   router.get('/', async (req, res, next) => {
@@ -14,8 +14,8 @@ export default function routes({ auditService, exampleService }: Services): Rout
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-    });
-    
+    })
+
     return res.render('pages/index', { currentTime })
   })
 
