@@ -17,7 +17,6 @@ test.describe('Health', () => {
     test('Health check is accessible and status is UP', async ({ page }) => {
       const response = await page.request.get('/health')
       const payload = await response.json()
-      console.log(JSON.stringify(payload))
       expect(payload.status).toBe('UP')
     })
 
