@@ -13,6 +13,6 @@ test.describe('Example', () => {
 
     const examplePage = await ExamplePage.verifyOnPage(page)
 
-    await expect(examplePage.timestamp).toContainText('The time is currently ')
+    await expect(examplePage.timestamp).toContainText('The date and time is currently ')
   })
 })

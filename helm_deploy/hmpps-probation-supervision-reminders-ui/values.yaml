@@ -46,7 +46,7 @@ generic-service:
       CLIENT_CREDS_CLIENT_SECRET: 'CLIENT_CREDS_CLIENT_SECRET'
     hmpps-probation-supervision-reminders-ui-auth-code:
       AUTH_CODE_CLIENT_ID: 'AUTH_CODE_CLIENT_ID'
-      AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'    
+      AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'
     hmpps-probation-supervision-reminders-ui-session-secret:
       SESSION_SECRET: 'SESSION_SECRET'
     hmpps-probation-supervision-reminders-ui-elasticache-redis:
@@ -61,7 +61,10 @@ generic-service:
 
   allowlist:
     groups:
-      - internal
+      - digital_staff_and_mojo
+      - unilink_staff
+      - moj_cloud_platform
+      - probation
 
 generic-prometheus-alerts:
   targetApplication: hmpps-probation-supervision-reminders-ui
