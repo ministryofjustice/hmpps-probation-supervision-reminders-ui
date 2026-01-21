@@ -15,7 +15,7 @@ generic-service:
   ingress:
     enabled: true
     host: app-hostname.local # override per environment
-    tlsSecretName: hmpps-probation-supervision-reminders-ui-cert
+    tlsSecretName: probation-supervision-reminders-ui-cert
 
   livenessProbe:
     httpGet:
