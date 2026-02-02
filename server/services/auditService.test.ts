@@ -36,7 +36,7 @@ describe('Audit service', () => {
 
   describe('logPageView', () => {
     it('sends page view event audit message using audit client', async () => {
-      await auditService.logPageView(Page.EXAMPLE_PAGE, {
+      await auditService.logPageView(Page.HOME_PAGE, {
         who: 'user1',
         subjectId: 'subject123',
         subjectType: 'exampleType',

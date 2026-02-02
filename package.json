@@ -1,7 +1,7 @@
 {
   "name": "hmpps-probation-supervision-reminders-ui",
   "version": "0.0.1",
-  "description": "HMPPS Probation Supervision Reminders Ui",
+  "description": "HMPPS Probation Supervision Reminders UI",
   "repository": "git@github.com:ministryofjustice/hmpps-probation-supervision-reminders-ui.git",
   "license": "MIT",
   "scripts": {
@@ -35,6 +35,9 @@
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.934.0",
+    "@js-joda/core": "5.7.0",
+    "@js-joda/locale_en": "4.15.3",
+    "@js-joda/timezone": "2.23.0",
     "@ministryofjustice/frontend": "^7.1.0",
     "@ministryofjustice/hmpps-auth-clients": "^1.0.1",
     "@ministryofjustice/hmpps-monitoring": "^1.0.0",
@@ -54,6 +57,7 @@
     "http-errors": "^2.0.0",
     "jwt-decode": "^4.0.0",
     "nocache": "^4.0.0",
+    "notifications-node-client": "8.2.1",
     "nunjucks": "^3.2.4",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",

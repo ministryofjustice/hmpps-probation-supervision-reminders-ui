@@ -5,7 +5,7 @@ import config from './server/config'
 const formatOut = bunyanFormat({ outputMode: 'short', color: !config.production })
 
 const logger = bunyan.createLogger({
-  name: 'HMPPS Probation Supervision Reminders Ui',
+  name: 'HMPPS Probation Supervision Reminders UI',
   stream: formatOut,
   level: 'debug',
 })
