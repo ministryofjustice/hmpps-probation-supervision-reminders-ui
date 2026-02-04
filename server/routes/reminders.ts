@@ -6,12 +6,17 @@ import {asArray, asDate} from "../utils/url";
 import getAllNotifications from "../utils/notifyUtils";
 import {formatDate, parseDate} from "../utils/utils";
 import {LocalDate} from "@js-joda/core";
+import config from "../config";
+import {NotifyClient} from "notifications-node-client";
 
 export default function reminderRoutes(router: Router, { auditService }: Services): Router {
 
+  const notifyClient = config.notify.customUrl
+    ? new NotifyClient(config.notify.customUrl, config.notify.apiKey)
+    : new NotifyClient(config.notify.apiKey)
+
   router.get('/', async (req, res, next) => {
     await auditService.logPageView(Page.HOME_PAGE, { who: res.locals.user.username, correlationId: req.id })
-
 
     const filters: Filters = {
       from: asDate(req.query.from),
@@ -53,7 +58,18 @@ export default function reminderRoutes(router: Router, { auditService }: Service
       { text: mapStatus(n.status) },
     ])
 
-    res.render('pages/list', { headers, results, minDate, maxDate })
+    res.render('pages/list', { headers, results, filters, minDate, maxDate })
+  })
+
+  router.get('/notification/:id', async (req, res, next) => {
+    await auditService.logPageView(Page.NOTIFICATION, { who: res.locals.user.username, correlationId: req.id })
+
+    const notification = (await notifyClient.getNotificationById(req.params.id)).data
+    const templateName = (await notifyClient.getTemplateById(notification.template.id)).data.name
+    const crn = notification.reference
+    const previousNotifications = (await notifyClient.getNotifications('sms', null, crn, req.params.id)).data
+      .notifications
+    res.render('pages/notification', { notification, templateName, previousNotifications })
   })
   return router
 }

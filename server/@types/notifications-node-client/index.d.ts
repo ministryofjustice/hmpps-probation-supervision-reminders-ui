@@ -18,6 +18,25 @@ declare module 'notifications-node-client' {
         notifications: Notification[]
       }
     }>
+
+    getNotificationById(notificationId: string): Promise<{ data: Notification }>
+
+    getTemplateById(templateId: string): Promise<{
+      data: {
+        body: string
+        created_at: Date
+        created_by: string
+        id: string
+        name: string
+        personalisation: unknown
+        postage?: string
+        subject?: string
+        type: string
+        updated_at?: string
+        version: number
+      }
+    }>
+
   }
 
   export interface Notification {

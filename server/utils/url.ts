@@ -8,7 +8,7 @@ export function asArray(param: undefined | string | ParsedQs | (string | ParsedQ
 
 export function asDate(
   date: null | undefined | string | ParsedQs | (string | ParsedQs)[],
-  defaultValue: LocalDate = LocalDate.now().minusDays(1),
+  defaultValue: LocalDate = LocalDate.now(),
 ): LocalDate {
   return date ? LocalDate.parse(date as string, DateTimeFormatter.ofPattern('d/M/yyyy')) : defaultValue
 }

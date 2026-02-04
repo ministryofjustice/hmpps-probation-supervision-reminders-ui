@@ -3,7 +3,7 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
 import fs from 'fs'
-import {convertToTitleCase, formatDate, initialiseName} from './utils'
+import {convertToTitleCase, formatDate, initialiseName, parseDate} from './utils'
 import config from '../config'
 import logger from '../../logger'
 
@@ -42,6 +42,7 @@ export default function nunjucksSetup(app: express.Express): void {
   njkEnv.addFilter('initialiseName', initialiseName)
   njkEnv.addFilter('assetMap', (url: string) => assetManifest[url] || url)
   njkEnv.addFilter('formatDate', formatDate)
+  njkEnv.addFilter('parseDate', parseDate)
   njkEnv.addFilter('toErrorList', (errors: Record<string, string>) =>
     Object.entries(errors).map(([key, value]) => ({ text: `${convertToTitleCase(key)}: ${value}`, href: `#${key}` })),
   )
