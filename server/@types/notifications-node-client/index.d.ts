@@ -36,7 +36,6 @@ declare module 'notifications-node-client' {
         version: number
       }
     }>
-
   }
 
   export interface Notification {
@@ -76,10 +75,3 @@ declare module 'notifications-node-client' {
     type: string
   }
 }
-
-
-
-
-
-
-

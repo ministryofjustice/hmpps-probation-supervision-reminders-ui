@@ -26,7 +26,6 @@ export const initialiseName = (fullName?: string): string | null => {
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
 
-
 export const dateTimeFormatter = DateTimeFormatter.ofPattern("eeee, d MMMM 'at' HH:mma").withLocale(Locale.ENGLISH)
 export const europeLondon = ZoneId.of('Europe/London')
 

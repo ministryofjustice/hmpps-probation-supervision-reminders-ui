@@ -3,10 +3,7 @@ import { Notification, NotifyClient } from 'notifications-node-client'
 import { parseDate } from './utils'
 import config from '../config'
 
-export default async function getAllNotifications(
-  from: LocalDate,
-  to: LocalDate,
-): Promise<Notification[]>  {
+export default async function getAllNotifications(from: LocalDate, to: LocalDate): Promise<Notification[]> {
   const notifications: Notification[] = []
   let olderThanId = null
 
@@ -34,6 +31,3 @@ export default async function getAllNotifications(
     }
   }
 }
-
-
-

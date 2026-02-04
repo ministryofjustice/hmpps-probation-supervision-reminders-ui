@@ -3,7 +3,7 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
 import fs from 'fs'
-import {convertToTitleCase, formatDate, initialiseName, parseDate} from './utils'
+import { convertToTitleCase, formatDate, initialiseName, parseDate } from './utils'
 import config from '../config'
 import logger from '../../logger'
 

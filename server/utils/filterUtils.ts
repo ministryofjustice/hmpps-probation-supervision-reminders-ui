@@ -1,6 +1,6 @@
 import { LocalDate } from '@js-joda/core'
-import {convertToTitleCase} from "./utils";
-import {Notification} from "notifications-node-client";
+import { Notification } from 'notifications-node-client'
+import { convertToTitleCase } from './utils'
 
 export interface Filters {
   from: LocalDate
@@ -20,4 +20,3 @@ export function filterByKeywords(notification: Notification, keywords?: string):
     str => str?.toLowerCase()?.includes(keywords.toLowerCase()),
   )
 }
-
