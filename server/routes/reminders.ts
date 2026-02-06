@@ -29,7 +29,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     const maxDate = LocalDate.now()
     const errors = {} as Record<string, string>
     if (filters.from.isBefore(minDate)) errors.from = 'Cannot be more than 90 days in the past'
-    if (filters.from.isAfter(maxDate)) errors.to = 'Please select a date in the past'
+    if (filters.from.isAfter(maxDate)) errors.from = 'Please select a date in the past'
     if (filters.from.isAfter(filters.to)) errors.to = 'Must be on or after the "From" date'
     if (filters.from.isBefore(filters.to.minusDays(7))) errors.from = 'Must be within 7 days of the "To" date'
     if (filters.to.isAfter(maxDate)) errors.to = 'Please select a date in the past'
