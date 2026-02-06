@@ -82,4 +82,5 @@ export default {
   },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  authorisedRole: get('AUTHORISED_ROLE', 'false'),
 }
