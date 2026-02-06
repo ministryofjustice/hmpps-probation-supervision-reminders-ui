@@ -17,26 +17,26 @@
     </div>
     <div class="govuk-grid-column-one-half-from-desktop">
       <time datetime="{{ notification.sent_at }}"
-            class="moj-message-list__date">{{ notification.sent_at | parseDate | formatDate('eeee, d MMMM yyyy') }}</time>
+            class="moj-message-list__date">{{ notification.sent_at | parseDate | formatDate('EEEE, d MMMM yyyy') }}</time>
       <div class="moj-message-item moj-message-item--sent govuk-!-width-auto">
         <div class="moj-message-item__text moj-message-item__text--sent">{{ notification.body }}</div>
         <div class="moj-message-item__meta">
           <span class="moj-message-item__meta--sender">GOVUK</span> at
           <time class="moj-message-item__meta--timestamp"
-                datetime="{{ notification.sent_at }}">{{ notification.sent_at | parseDate | formatDate('HH:mma') }}</time>
+                datetime="{{ notification.sent_at }}">{{ notification.sent_at | parseDate | formatDate('h:mma') }}</time>
         </div>
       </div>
       <div class="govuk-!-width-full govuk-!-text-align-right secondary-text">{{ notification.status }}</div>
 
       {% for previousNotification in previousNotifications %}
         <time datetime="{{ previousNotification.sent_at }}"
-              class="moj-message-list__date">{{ previousNotification.sent_at | parseDate | formatDate('eeee, d MMMM yyyy') }}</time>
+              class="moj-message-list__date">{{ previousNotification.sent_at | parseDate | formatDate('EEEE, d MMMM yyyy') }}</time>
         <div class="moj-message-item moj-message-item--sent govuk-!-width-auto">
           <div class="moj-message-item__text moj-message-item__text--sent">{{ previousNotification.body }}</div>
           <div class="moj-message-item__meta">
             <span class="moj-message-item__meta--sender">GOVUK</span> at
             <time class="moj-message-item__meta--timestamp"
-                  datetime="{{ previousNotification.sent_at }}">{{ previousNotification.sent_at | parseDate | formatDate('HH:mma') }}</time>
+                  datetime="{{ previousNotification.sent_at }}">{{ previousNotification.sent_at | parseDate | formatDate('h:mma') }}</time>
           </div>
         </div>
         <div class="govuk-!-width-full govuk-!-text-align-right secondary-text">{{ previousNotification.status }}</div>

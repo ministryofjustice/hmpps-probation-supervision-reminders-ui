@@ -23,10 +23,10 @@ export const initialiseName = (fullName?: string): string | null => {
   if (!fullName) return null
 
   const array = fullName.split(' ')
-  return `${array[0][0]}. ${array.reverse()[0]}`
+  return `${array[0][0]}. ${array.toReversed()[0]}`
 }
 
-export const dateTimeFormatter = DateTimeFormatter.ofPattern("eeee, d MMMM 'at' HH:mma").withLocale(Locale.ENGLISH)
+export const dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, d MMMM 'at' h:mma").withLocale(Locale.ENGLISH)
 export const europeLondon = ZoneId.of('Europe/London')
 
 export const formatDate = (date?: TemporalAccessor, pattern?: string): string => {
