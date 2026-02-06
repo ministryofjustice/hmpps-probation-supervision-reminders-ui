@@ -17,18 +17,18 @@ export default {
           notifications: [
             {
               body: "Dear test,\nYou have an appointment at Birmingham office on {{ now offset='+1 days' format='dd/MM/yyyy' }} at 5pm.\nThis is an automated message. Do not reply.",
-              completed_at: "{{ now offset='-1 days' }}",
+              completed_at: "{{ now  }}",
               cost_details: {
                 billable_sms_fragments: 1,
                 international_rate_multiplier: 1.0,
                 sms_rate: 0.0227,
               },
               cost_in_pounds: 0.0227,
-              created_at: "{{ now offset='-1 days' }}",
+              created_at: "{{ now  }}",
               id: '00000000-0000-0000-0000-000000000001',
               phone_number: '07700900000',
               reference: 'A000001',
-              sent_at: "{{ now offset='-1 days' }}",
+              sent_at: "{{ now  }}",
               status: 'delivered',
               subject: null,
               template: {
@@ -40,6 +40,29 @@ export default {
             },
             {
               body: "Dear test2,\nYou have an appointment at London office on {{ now offset='+1 days' format='dd/MM/yyyy' }} at 6pm.\nThis is an automated message. Do not reply.",
+              completed_at: "{{ now  }}",
+              cost_details: {
+                billable_sms_fragments: 1,
+                international_rate_multiplier: 1.0,
+                sms_rate: 0.0227,
+              },
+              cost_in_pounds: 0.0227,
+              created_at: "{{ now }}",
+              id: '00000000-0000-0000-0000-000000000002',
+              phone_number: '07700900111',
+              reference: 'A000002',
+              sent_at: "{{ now  }}",
+              status: 'sending',
+              subject: null,
+              template: {
+                id: '00000000-0000-0000-0000-000000000000',
+                uri: 'https://api.notifications.service.gov.uk/v2/template/00000000-0000-0000-0000-000000000000/version/1',
+                version: 1,
+              },
+              type: 'sms',
+            },
+            {
+              body: "Dear test3,\nYou have an appointment at London office on {{ now offset='+1 days' format='dd/MM/yyyy' }} at 6pm.\nThis is an automated message. Do not reply.",
               completed_at: "{{ now offset='-1 days' }}",
               cost_details: {
                 billable_sms_fragments: 1,
