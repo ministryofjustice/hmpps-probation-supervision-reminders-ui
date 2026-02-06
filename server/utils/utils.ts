@@ -38,5 +38,5 @@ export const formatDate = (date?: TemporalAccessor, pattern?: string): string =>
   return formatter.format(date)
 }
 
-export const parseDate = (dateString?: string): ZonedDateTime =>
+export const parseDate = (dateString?: string): ZonedDateTime | null =>
   dateString ? ZonedDateTime.parse(dateString).withZoneSameInstant(europeLondon) : null
