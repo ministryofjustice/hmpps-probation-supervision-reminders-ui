@@ -134,7 +134,7 @@
         "status": 200,
         "jsonBody": {
           "links": {
-            "current": "http://localhost:9090/notifications-api/v2/notifications?template_type=sms&reference=A000001&older_than=00000000-0000-0000-0000-000000000001"
+            "current": "http://localhost:9091/notifications-api/v2/notifications?template_type=sms&reference=A000001&older_than=00000000-0000-0000-0000-000000000001"
           },
           "notifications": [
             {
