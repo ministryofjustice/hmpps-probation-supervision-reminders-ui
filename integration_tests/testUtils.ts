@@ -1,11 +1,12 @@
 import { Page } from '@playwright/test'
 import tokenVerification from './mockApis/tokenVerification'
+import notification from './mockApis/notification'
 import hmppsAuth, { type UserToken } from './mockApis/hmppsAuth'
 import { resetStubs } from './mockApis/wiremock'
 
 export { resetStubs }
 
-const DEFAULT_ROLES = ['ROLE_SOME_REQUIRED_ROLE']
+const DEFAULT_ROLES = ['ROLE_MANAGE_SUPERVISIONS']
 
 export const attemptHmppsAuthLogin = async (page: Page) => {
   await page.goto('/')
@@ -24,6 +25,10 @@ export const login = async (
     hmppsAuth.stubSignOutPage(),
     hmppsAuth.token({ name, roles, authSource }),
     tokenVerification.stubVerifyToken(active),
+    notification.getSmsNotifications(),
+    notification.getNotification0001(),
+    notification.getSmsNotificationsForA000001OlderThan0001(),
+    notification.getTemplate0000(),
   ])
   await attemptHmppsAuthLogin(page)
 }
