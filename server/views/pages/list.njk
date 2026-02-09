@@ -116,7 +116,7 @@
         {{ mojFilter({
           heading: { text: 'Filters' },
           submit: { attributes: { id: "apply-filters-button" } },
-          selectedFilters: null if(availableFilterOptions.asCategories | length === 0) else {
+          selectedFilters: null if(availableFilterOptions.asCategories | length == 0) else {
             heading: { text: 'Selected filters'},
             clearLink: { text: 'Clear', href: '/' },
             categories: availableFilterOptions.asCategories
@@ -127,7 +127,7 @@
     </div>
 
     <div class="govuk-grid-column-two-thirds">
-      {% if results | length === 0 %}
+      {% if results | length == 0 %}
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
           <strong class="govuk-warning-text__text">
