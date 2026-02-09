@@ -9,6 +9,14 @@ import getAllNotifications from '../utils/notifyUtils'
 import { formatDate, parseDate } from '../utils/utils'
 import config from '../config'
 
+const escapeHtml = (value: unknown): string =>
+  String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
 export default function reminderRoutes(router: Router, { auditService }: Services): Router {
   const notifyClient = config.notify.customUrl
     ? new NotifyClient(config.notify.customUrl, config.notify.apiKey)
@@ -44,18 +52,33 @@ export default function reminderRoutes(router: Router, { auditService }: Service
       .filter(n => filterByKeywords(n, filters.keywords))
       .filter(n => filters.status.length === 0 || filters.status.includes(n.status))
       .filter(n => filters.template.length === 0 || filters.template.includes(n.template.id))
-      .map(n => [
-        {
-          html: `<a href="/notification/${n.id}" class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">${n.phone_number}</a><div class="secondary-text">${n.reference}</div>`,
-        },
-        {
-          html: `<p class="govuk-!-margin-bottom-1">${n.body}</p>
-          <time class="secondary-text" datetime="${n.sent_at}" title="${n.sent_at}">
-            Sent on ${formatDate(parseDate(n.sent_at))}
+      .map(n => {
+        const id = encodeURIComponent(String(n.id))
+        const phoneNumber = escapeHtml(n.phone_number)
+        const reference = escapeHtml(n.reference)
+        const body = escapeHtml(n.body)
+        const sentAt = escapeHtml(n.sent_at)
+
+        let sentOn = ''
+        try {
+          sentOn = `Sent on ${formatDate(parseDate(n.sent_at))}`
+        } catch {
+          sentOn = 'Sent date unavailable'
+        }
+
+        return [
+          {
+            html: `<a href="/notification/${id}" class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">${phoneNumber}</a><div class="secondary-text">${reference}</div>`,
+          },
+          {
+            html: `<p class="govuk-!-margin-bottom-1">${body}</p>
+          <time class="secondary-text" datetime="${sentAt}" title="${sentAt}">
+            ${escapeHtml(sentOn)}
           </time>`,
-        },
-        { text: mapStatus(n.status) },
-      ])
+          },
+          { text: mapStatus(n.status) },
+        ]
+      })
 
     res.render('pages/list', { headers, results, filters, minDate, maxDate })
   })
