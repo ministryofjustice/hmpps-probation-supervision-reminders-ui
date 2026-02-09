@@ -34,7 +34,7 @@
     "npm": "^11"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.934.0",
+    "@aws-sdk/client-sqs": "^3.985.0",
     "@ministryofjustice/frontend": "^7.1.0",
     "@ministryofjustice/hmpps-auth-clients": "^1.0.1",
     "@ministryofjustice/hmpps-monitoring": "^1.0.0",
