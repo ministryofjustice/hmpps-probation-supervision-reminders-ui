@@ -104,7 +104,8 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "@isaacs/brace-expansion": "5.0.0",
-    "diff": "5.2.2"
+    "@isaacs/brace-expansion": "^5.0.1",
+    "diff": "5.2.2",
+    "axios": "^1.13.5"
   }
 }
