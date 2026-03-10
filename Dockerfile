@@ -17,7 +17,8 @@ ENV GIT_BRANCH=${GIT_BRANCH}
 
 # Patch OpenSSL (libssl3) to fixed version
 RUN apk update && apk add --no-cache \
-    libssl3=3.5.5-r0
+    libssl3=3.5.5-r0\
+    zlib=1.3.2-r0
 
 # Stage: build assets
 FROM base AS build

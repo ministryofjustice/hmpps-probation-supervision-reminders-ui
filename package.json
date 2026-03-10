@@ -106,6 +106,9 @@
   "overrides": {
     "@isaacs/brace-expansion": "^5.0.1",
     "diff": "5.2.2",
-    "axios": "^1.13.5"
+    "axios": "^1.13.5",
+    "@ministryofjustice/hmpps-audit-client": {
+      "fast-xml-parser": "^5.3.8"
+    }
   }
 }
