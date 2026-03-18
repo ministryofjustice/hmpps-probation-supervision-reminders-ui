@@ -108,8 +108,6 @@
     "diff": "5.2.2",
     "axios": "^1.13.5",
     "flatted": "^3.4.0",
-    "@ministryofjustice/hmpps-audit-client": {
-      "fast-xml-parser": "^5.3.8"
-    }
+    "fast-xml-parser": "5.5.6"
   }
 }
