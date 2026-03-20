@@ -26,41 +26,57 @@
     {{ govukErrorSummary({ titleText: "There is a problem", errorList: errors | toErrorList }) }}
   {% endif %}
 
-  {{ mojPageHeaderActions({
-    heading: { text: 'Sent reminders' },
-    items: [{
-      text: 'Download as CSV',
-      classes: 'govuk-button--secondary',
-      href: '/csv?from=' + (filters.from | formatDate('dd/MM/yyyy')) + '&to=' + (filters.to | formatDate('dd/MM/yyyy')) + '&provider=' + filters.provider
-    }]
-  }) }}
+  <div class="moj-page-header-actions moj-page-header-actions__title">
+    <h1 class="govuk-heading-xl">
+      {{'Sent reminders'}}
+    </h1>
+  </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
       {%- set filterOptionsHtml %}
-        <div class="govuk-form-group">
           {{ mojDatePicker({
             id: "from",
             name: "from",
-            label: { text: "From", classes: "govuk-label--s" },
-            value: filters.from | formatDate('dd/MM/yyyy'),
-            minDate: minDate | formatDate('dd/MM/yyyy'),
-            maxDate: maxDate | formatDate('dd/MM/yyyy'),
-            errorMessage: { text: errors.from } if errors.from
+            label: {
+              text: "Date from",
+              classes: "govuk-label--s govuk-!-font-weight-bold"
+            },
+            formGroup: {
+              classes: "govuk-!-margin-bottom-3",
+              attributes: {
+                'data-qa': 'from'
+              }
+            },
+            value: filters.from | formatDate('d/M/yyyy'),
+            minDate: minDate | formatDate('d/M/yyyy'),
+            maxDate: maxDate | formatDate('d/M/yyyy'),
+            errorMessage: {
+              text: errors.from
+            } if errors.from
           }) }}
-        </div>
 
-        <div class="govuk-form-group">
           {{ mojDatePicker({
             id: "to",
             name: "to",
-            label: { text: "To", classes: "govuk-label--s" },
-            value: filters.to | formatDate('dd/MM/yyyy'),
-            minDate: minDate | formatDate('dd/MM/yyyy'),
-            maxDate: maxDate | formatDate('dd/MM/yyyy'),
-            errorMessage: { text: errors.to } if errors.to
+            label: {
+              text: "Date to",
+              classes: "govuk-label--s"
+            },
+            formGroup: {
+              classes: "govuk-!-margin-bottom-3",
+              attributes: {
+              'data-qa': 'to'
+              }
+            },
+            value: filters.to | formatDate('d/M/yyyy'),
+            minDate: minDate | formatDate('d/M/yyyy'),
+            maxDate: maxDate | formatDate('d/M/yyyy'),
+            errorMessage: {
+              text: errors.to
+            }
+            if errors.to
           }) }}
-        </div>
 
         {{ govukInput({
           id: 'keywords',
