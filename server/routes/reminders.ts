@@ -22,7 +22,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     ? new NotifyClient(config.notify.customUrl, config.notify.apiKey)
     : new NotifyClient(config.notify.apiKey)
 
-  router.get('/', async (req, res, next) => {
+  router.get('/', async (req, res) => {
     await auditService.logPageView(Page.HOME_PAGE, { who: res.locals.user.username, correlationId: req.id })
 
     const filters: Filters = {
@@ -80,10 +80,11 @@ export default function reminderRoutes(router: Router, { auditService }: Service
         ]
       })
 
+    req.session.returnTo = req.url
     res.render('pages/list', { headers, results, filters, minDate, maxDate })
   })
 
-  router.get('/notification/:id', async (req, res, next) => {
+  router.get('/notification/:id', async (req, res) => {
     await auditService.logPageView(Page.NOTIFICATION, { who: res.locals.user.username, correlationId: req.id })
 
     const notification = (await notifyClient.getNotificationById(req.params.id)).data
@@ -91,7 +92,12 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     const crn = notification.reference
     const previousNotifications = (await notifyClient.getNotifications('sms', null, crn, req.params.id)).data
       .notifications
-    res.render('pages/notification', { notification, templateName, previousNotifications })
+    res.render('pages/notification', {
+      notification,
+      templateName,
+      previousNotifications,
+      backLink: req.session.returnTo ?? '/',
+    })
   })
   return router
 }

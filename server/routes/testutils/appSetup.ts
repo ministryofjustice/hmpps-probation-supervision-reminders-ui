@@ -25,7 +25,12 @@ export const user: HmppsUser = {
 
 export const flashProvider = jest.fn()
 
-function appSetup(services: Services, production: boolean, userSupplier: () => HmppsUser): Express {
+function appSetup(
+  services: Services,
+  production: boolean,
+  userSupplier: () => HmppsUser,
+  correlationId?: string,
+): Express {
   const app = express()
 
   app.set('view engine', 'njk')
@@ -41,7 +46,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => H
     next()
   })
   app.use((req, res, next) => {
-    req.id = randomUUID()
+    req.id = correlationId ?? randomUUID()
     next()
   })
   app.use(express.json())
@@ -59,10 +64,12 @@ export function appWithAllRoutes({
     auditService: new AuditService(null) as jest.Mocked<AuditService>,
   },
   userSupplier = () => user,
+  correlationId,
 }: {
   production?: boolean
   services?: Partial<Services>
   userSupplier?: () => HmppsUser
+  correlationId?: string
 }): Express {
-  return appSetup(services as Services, production, userSupplier)
+  return appSetup(services as Services, production, userSupplier, correlationId)
 }
