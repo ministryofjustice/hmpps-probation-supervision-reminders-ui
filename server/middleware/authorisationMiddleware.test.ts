@@ -1,42 +1,30 @@
 import jwt from 'jsonwebtoken'
-import type { Request, Response } from 'express'
-
+import httpMocks from 'node-mocks-http'
 import authorisationMiddleware from './authorisationMiddleware'
 
-function createToken(authorities: string[]) {
-  const payload = {
-    user_name: 'USER1',
-    scope: ['read', 'write'],
-    auth_source: 'nomis',
-    authorities,
-    jti: 'a610a10-cca6-41db-985f-e87efb303aaf',
-    client_id: 'clientid',
-  }
+const req = httpMocks.createRequest()
+const next = jest.fn()
 
-  return jwt.sign(payload, 'secret', { expiresIn: '1h' })
+const buildResponse = (token: Array<string>) => {
+  const res = httpMocks.createResponse({
+    locals: {
+      user: {
+        token: jwt.sign({ authorities: token }, 'secret'),
+      },
+    },
+  })
+
+  jest.spyOn(res, 'redirect')
+  return res
 }
 
 describe('authorisationMiddleware', () => {
-  let req: Request
-  const next = jest.fn()
-
-  function createResWithToken({ authorities }: { authorities: string[] }): Response {
-    return {
-      locals: {
-        user: {
-          token: createToken(authorities),
-        },
-      },
-      redirect: jest.fn(),
-    } as unknown as Response
-  }
-
-  beforeEach(() => {
+  afterEach(() => {
     jest.resetAllMocks()
   })
 
   it('should return next when no required roles', () => {
-    const res = createResWithToken({ authorities: [] })
+    const res = buildResponse([])
 
     authorisationMiddleware()(req, res, next)
 
@@ -45,27 +33,27 @@ describe('authorisationMiddleware', () => {
   })
 
   it('should redirect when user has no authorised roles', () => {
-    const res = createResWithToken({ authorities: [] })
+    const res = buildResponse(['TEST'])
 
-    authorisationMiddleware(['SOME_REQUIRED_ROLE'])(req, res, next)
+    authorisationMiddleware(['ROLE_REQUIRED'])(req, res, next)
 
     expect(next).not.toHaveBeenCalled()
     expect(res.redirect).toHaveBeenCalledWith('/authError')
   })
 
-  it('should return next when user has authorised role', () => {
-    const res = createResWithToken({ authorities: ['ROLE_SOME_REQUIRED_ROLE'] })
+  it('should return next when required role is unprefixed and user has authorised role', () => {
+    const res = buildResponse(['ROLE_REQUIRED'])
 
-    authorisationMiddleware(['SOME_REQUIRED_ROLE'])(req, res, next)
+    authorisationMiddleware(['REQUIRED'])(req, res, next)
 
     expect(next).toHaveBeenCalled()
     expect(res.redirect).not.toHaveBeenCalled()
   })
 
-  it('should return next when user has authorised role and middleware created with ROLE_ prefix', () => {
-    const res = createResWithToken({ authorities: ['ROLE_SOME_REQUIRED_ROLE'] })
+  it('should return next when user has authorised role', () => {
+    const res = buildResponse(['ROLE_REQUIRED'])
 
-    authorisationMiddleware(['ROLE_SOME_REQUIRED_ROLE'])(req, res, next)
+    authorisationMiddleware(['ROLE_REQUIRED'])(req, res, next)
 
     expect(next).toHaveBeenCalled()
     expect(res.redirect).not.toHaveBeenCalled()
