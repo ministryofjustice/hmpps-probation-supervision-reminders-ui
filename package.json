@@ -34,10 +34,10 @@
     "npm": "^11"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.985.0",
     "@js-joda/core": "5.7.0",
     "@js-joda/locale_en": "4.15.3",
     "@js-joda/timezone": "2.23.0",
-    "@aws-sdk/client-sqs": "^3.985.0",
     "@ministryofjustice/frontend": "^7.1.0",
     "@ministryofjustice/hmpps-auth-clients": "^1.0.1",
     "@ministryofjustice/hmpps-monitoring": "^1.0.0",
