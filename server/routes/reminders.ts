@@ -47,7 +47,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     }
 
     const notifications = await getAllNotifications(filters.from, filters.to)
-    const headers = [{ text: 'To' }, { text: 'Message' }, { text: 'Status' }]
+    const headers = [{ text: 'To', classes: 'govuk-!-width-one-quarter' }, { text: 'Message' }, { text: 'Status' }]
     const results = notifications
       .filter(n => filterByKeywords(n, filters.keywords))
       .filter(n => filters.status.length === 0 || filters.status.includes(n.status))
@@ -59,7 +59,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
         const body = escapeHtml(n.body)
         const sentAt = escapeHtml(n.sent_at)
 
-        let sentOn = ''
+        let sentOn: string
         try {
           sentOn = `Sent on ${formatDate(parseDate(n.sent_at))}`
         } catch {
