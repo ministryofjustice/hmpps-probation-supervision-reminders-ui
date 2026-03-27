@@ -8,11 +8,9 @@ import { createRedisClient } from '../data/redisClient'
 jest.mock('express-session')
 jest.mock('express')
 jest.mock('../config')
+jest.mock('../../logger')
 jest.mock('connect-redis', () => ({
   RedisStore: jest.fn(),
-}))
-jest.mock('../../logger', () => ({
-  logger: jest.fn(),
 }))
 jest.mock('../data/redisClient', () => ({
   createRedisClient: jest.fn(),
