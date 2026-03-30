@@ -36,11 +36,16 @@ export default defineConfig({
     actionTimeout: 30 /* seconds */ * 1000,
     timezoneId: 'Europe/London',
     launchOptions: { slowMo: 150 },
-    screenshot: 'only-on-failure',
-    trace: process.env.CI ? 'off' : 'on',
+    screenshot: 'off',
+    trace: process.env.CI ? 'off' : 'retain-on-failure',
     ...devices['Desktop Chrome'],
     testIdAttribute: 'data-qa',
     baseURL: 'http://localhost:3007',
+    video: {
+      mode: 'off',
+      size: { width: 1280, height: 720 },
+    },
+    viewport: { width: 1280, height: 720 },
   },
 
   /* Configure projects */

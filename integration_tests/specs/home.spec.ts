@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test'
 import { login, resetStubs } from '../testUtils'
 import HomePage from '../pages/homePage'
 
+test.use({ video: 'on' })
 test.describe('Home', () => {
   test.afterEach(async () => {
     await resetStubs()

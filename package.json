@@ -13,6 +13,7 @@
     "start-feature": " node $NODE_DEBUG_OPTION --env-file=feature.env dist/server.js | bunyan -o short",
     "start-feature:dev": "concurrently -k -n 'WireMock,Build' \"npm run wiremock\" \"node esbuild/esbuild --watch --env feature.env\"",
     "wiremock": "npx wiremock --port 9091 --root-dir wiremock --local-response-templating",
+    "wiremock:start-feature": "concurrently -k -n 'WireMock,App' \"npx wiremock --port 9091\" \"npm run start-feature\"",
     "lint": "eslint . --cache --max-warnings 0",
     "lint-fix": "eslint . --cache --max-warnings 0 --fix",
     "typecheck": "tsc && tsc -p integration_tests",
@@ -27,7 +28,10 @@
     "precommit:secrets": "gitleaks git --pre-commit --redact --staged --verbose --config .gitleaks/config.toml --gitleaks-ignore-path .gitleaks/.gitleaksignore",
     "precommit:lint": "lint-staged",
     "precommit:verify": "npm run typecheck && npm test",
-    "setup": "npm ci && hmpps-npm-script-run-allowlist"
+    "setup": "npm ci && hmpps-npm-script-run-allowlist",
+    "coverage": "jest --coverage",
+    "coverage:report": "jest --coverage --coverageReporters=lcov",
+    "test:coverage:e2e": "npm run setup && npx nyc --reporter=lcov --reporter=text --report-dir=coverage/e2e -- npm run wiremock:start-feature"
   },
   "engines": {
     "node": "^24",
