@@ -79,6 +79,9 @@
           }) }}
 
         {{ govukInput({
+          attributes: {
+            'data-qa': 'keywords'
+          },
           id: 'keywords',
           name: 'keywords',
           label: {
@@ -131,7 +134,7 @@
       <form>
         {{ mojFilter({
           heading: { text: 'Filters' },
-          submit: { attributes: { id: "apply-filters-button" } },
+          submit: { attributes: { 'data-qa': "apply-filters-button" } },
           selectedFilters: null if(availableFilterOptions.asCategories | length == 0) else {
             heading: { text: 'Selected filters'},
             clearLink: { text: 'Clear', href: '/' },
@@ -154,6 +157,9 @@
       {% else %}
         <p class="govuk-body" id="result-count">Showing {{ results | length }} result{{ 's' if results | length != 1 }}.</p>
         {{ govukTable({
+          attributes: {
+            'data-qa': 'reminders-table'
+          },
           head: headers,
           rows: results
         }) }}
