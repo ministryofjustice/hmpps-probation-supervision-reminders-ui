@@ -52,7 +52,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
       .filter(n => filterByKeywords(n, filters.keywords))
       .filter(n => filters.status.length === 0 || filters.status.includes(n.status))
       .filter(n => filters.template.length === 0 || filters.template.includes(n.template.id))
-      .map(n => {
+      .map((n, index) => {
         const id = encodeURIComponent(String(n.id))
         const phoneNumber = escapeHtml(n.phone_number)
         const reference = escapeHtml(n.reference)
@@ -68,7 +68,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
 
         return [
           {
-            html: `<a href="/notification/${id}" class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">${phoneNumber}</a><div class="secondary-text">${reference}</div>`,
+            html: `<a href="/notification/${id}" data-qa="phone-number-${index + 1}" class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">${phoneNumber}</a><div class="secondary-text">${reference}</div>`,
           },
           {
             html: `<p class="govuk-!-margin-bottom-1">${body}</p>
