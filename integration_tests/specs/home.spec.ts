@@ -3,6 +3,7 @@ import { login, resetStubs } from '../testUtils'
 import dateUtils from '../utils/dateUtil'
 import HomePage from '../pages/homePage'
 
+test.use({ video: 'on' })
 test.describe('Home', () => {
   test.afterEach(async () => {
     await resetStubs()
