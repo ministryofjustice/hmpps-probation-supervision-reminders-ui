@@ -47,19 +47,19 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     }
 
     const notifications = await getAllNotifications(filters.from, filters.to)
-    const headers = [{ text: 'To' }, { text: 'Message' }, { text: 'Status' }]
+    const headers = [{ text: 'To', classes: 'govuk-!-width-one-quarter' }, { text: 'Message' }, { text: 'Status' }]
     const results = notifications
       .filter(n => filterByKeywords(n, filters.keywords))
       .filter(n => filters.status.length === 0 || filters.status.includes(n.status))
       .filter(n => filters.template.length === 0 || filters.template.includes(n.template.id))
-      .map(n => {
+      .map((n, index) => {
         const id = encodeURIComponent(String(n.id))
         const phoneNumber = escapeHtml(n.phone_number)
         const reference = escapeHtml(n.reference)
         const body = escapeHtml(n.body)
         const sentAt = escapeHtml(n.sent_at)
 
-        let sentOn = ''
+        let sentOn: string
         try {
           sentOn = `Sent on ${formatDate(parseDate(n.sent_at))}`
         } catch {
@@ -68,7 +68,7 @@ export default function reminderRoutes(router: Router, { auditService }: Service
 
         return [
           {
-            html: `<a href="/notification/${id}" class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">${phoneNumber}</a><div class="secondary-text">${reference}</div>`,
+            html: `<a href="/notification/${id}" data-qa="phone-number-${index + 1}" class="govuk-!-font-weight-bold govuk-!-margin-bottom-1">${phoneNumber}</a><div class="secondary-text">${reference}</div>`,
           },
           {
             html: `<p class="govuk-!-margin-bottom-1">${body}</p>
