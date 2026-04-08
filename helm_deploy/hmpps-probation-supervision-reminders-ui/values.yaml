@@ -3,7 +3,7 @@ generic-service:
   productId: 'HMPPS541' # productId for the product that this belongs too, i.e. DPS001, see README.md for details
 
   # the IRSA service account name for accessing AWS resources
-  # serviceAccountName: "hmpps-probation-supervision-reminders-ui"
+  serviceAccountName: "hmpps-probation-supervision-reminders-ui"
 
   replicaCount: 4
 
