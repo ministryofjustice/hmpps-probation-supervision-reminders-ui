@@ -16,5 +16,7 @@ export default configureAllowedScripts({
     'node_modules/unrs-resolver@1.11.1': 'ALLOW',
     // Needed to supports locale_en values
     'node_modules/cldr-data@36.0.5': 'ALLOW',
+    //Not sure if needed yet
+    'node_modules/protobufjs@7.5.4': 'FORBID',
   },
 })
