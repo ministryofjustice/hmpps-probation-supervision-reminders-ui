@@ -14,7 +14,7 @@ export default configureAllowedScripts({
     'node_modules/playwright/node_modules/fsevents@2.3.2': 'ALLOW',
     // Native solution to quickly resolve module paths, used by jest and eslint
     'node_modules/unrs-resolver@1.11.1': 'ALLOW',
-    // Not sure if safe yet
+    // Needed to supports locale_en values
     'node_modules/cldr-data@36.0.5': "ALLOW",
   },
 })
