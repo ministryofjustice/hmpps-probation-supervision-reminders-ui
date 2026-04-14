@@ -24,6 +24,8 @@ Install NPM package dependencies:
 
 ```shell
 npm run setup
+
+
 ```
 
 ### Run the service
