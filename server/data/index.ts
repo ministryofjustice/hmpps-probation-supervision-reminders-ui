@@ -15,6 +15,7 @@ import { createRedisClient } from './redisClient'
 import config from '../config'
 import HmppsAuditClient from './hmppsAuditClient'
 import logger from '../../logger'
+import ProbationFrontendComponentsApiClient from './probationFrontendComponentsClient'
 
 export const dataAccess = () => {
   const hmppsAuthClient = new AuthenticationClient(
@@ -26,10 +27,11 @@ export const dataAccess = () => {
   return {
     applicationInfo,
     hmppsAuthClient,
+    probationFrontendComponentsApiClient: new ProbationFrontendComponentsApiClient(),
     hmppsAuditClient: new HmppsAuditClient(config.sqs.audit),
   }
 }
 
 export type DataAccess = ReturnType<typeof dataAccess>
 
-export { AuthenticationClient, HmppsAuditClient }
+export { AuthenticationClient, HmppsAuditClient, ProbationFrontendComponentsApiClient }
