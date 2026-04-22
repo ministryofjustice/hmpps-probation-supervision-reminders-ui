@@ -7,7 +7,7 @@
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-  {{ feComponents.header | safe }}
+  {% include "./prob_fe_header.njk" %}
   {% block banner %}{% endblock %}
 {% endblock %}
 
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block footer %}
-  {{ feComponents.footer | safe }}
+  {% include "./prob_fe_footer.njk" %}
 {% endblock %}
 
 {% block bodyEnd %}
