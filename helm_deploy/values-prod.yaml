@@ -9,6 +9,7 @@ generic-service:
     INGRESS_URL: "https://probation-supervision-reminders-ui.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
+    ROBATION_FRONTEND_COMPONENTS_API_URL: "https://probation-frontend-components.hmpps.service.justice.gov.uk"
     AUDIT_ENABLED: "false"
 
 generic-prometheus-alerts:
