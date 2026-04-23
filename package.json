@@ -108,6 +108,6 @@
     "diff": "8.0.4",
     "axios": "^1.14.0",
     "flatted": "^3.4.2",
-    "fast-xml-parser": "5.5.10"
+    "fast-xml-parser": "5.7.0"
   }
 }
