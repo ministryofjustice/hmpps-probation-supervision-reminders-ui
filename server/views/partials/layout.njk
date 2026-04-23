@@ -7,10 +7,15 @@
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-  {% include "./header.njk" %}
+  {% include "./prob_fe_header.njk" %}
+  {% block banner %}{% endblock %}
 {% endblock %}
 
 {% block bodyStart %}
+{% endblock %}
+
+{% block footer %}
+  {% include "./prob_fe_footer.njk" %}
 {% endblock %}
 
 {% block bodyEnd %}

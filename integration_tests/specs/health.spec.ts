@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 import hmppsAuth from '../mockApis/hmppsAuth'
 import tokenVerification from '../mockApis/tokenVerification'
+import probationFrontendComponentsApi from '../mockApis/probationFrontendComponentsApi'
 
 import { resetStubs } from '../testUtils'
 
@@ -11,7 +12,7 @@ test.describe('Health', () => {
 
   test.describe('All healthy', () => {
     test.beforeEach(async () => {
-      await Promise.all([hmppsAuth.stubPing(), tokenVerification.stubPing()])
+      await Promise.all([hmppsAuth.stubPing(), tokenVerification.stubPing(), probationFrontendComponentsApi.stubPing()])
     })
 
     test('Health check is accessible and status is UP', async ({ page }) => {
