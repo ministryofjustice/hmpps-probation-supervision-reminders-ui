@@ -34,8 +34,6 @@ describe('ProbationFEComponentsMiddleware', () => {
     const cached = {
       header: '<header>cached</header>',
       footer: '<footer>cached</footer>',
-      cssIncludes: ['a.css'],
-      jsIncludes: ['a.js'],
     }
     const { req, res } = createReqRes({ session: { feComponents: cached } })
 
@@ -83,13 +81,11 @@ describe('ProbationFEComponentsMiddleware', () => {
     expect(res.locals.feComponents).toEqual({
       header: '<a href="/">Home</a>',
       footer: footerHtml,
-      cssIncludes: ['h.css', 'f.css'],
-      jsIncludes: ['h.js', 'f.js'],
     })
 
     // Cached into the session
 
-    expect((req.session as any).feComponents).toEqual(res.locals.feComponents) // eslint-disable-line
+    expect(req.session.feComponents).toEqual(res.locals.feComponents)
 
     expect(fakeService.getProbationFEComponents).toHaveBeenCalledWith(['header', 'footer'], token)
     expect(next).toHaveBeenCalled()

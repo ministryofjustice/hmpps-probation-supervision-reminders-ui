@@ -1,10 +1,16 @@
 import type { RequestHandler } from 'express'
 import ProbationComponentsService from '../services/ProbationComponentsService'
 import logger from '../../logger'
+import config from '../config'
 
 export default function getFrontendComponents(probationComponentsService: ProbationComponentsService): RequestHandler {
   return async (req, res, next) => {
-    const cached = (req.session as any)?.feComponents // eslint-disable-line
+    const cached = req.session?.feComponents
+
+    res.locals.cookies = config.apis.cookies.url
+    res.locals.privacy = config.apis.privacy.url
+    res.locals.accessibility = config.apis.accessibility.url
+
     if (cached?.header && cached?.footer) {
       res.locals.feComponents = cached
       return next()
@@ -26,12 +32,10 @@ export default function getFrontendComponents(probationComponentsService: Probat
     res.locals.feComponents = {
       header: replaceHashWithSlash(header?.html),
       footer: footer?.html,
-      cssIncludes: [...(header?.css || []), ...(footer?.css || [])],
-      jsIncludes: [...(header?.javascript || []), ...(footer?.javascript || [])],
     }
 
     if (req?.session) {
-      ;(req.session as any).feComponents = res.locals.feComponents // eslint-disable-line
+      req.session.feComponents = res.locals.feComponents
     }
 
     return next()

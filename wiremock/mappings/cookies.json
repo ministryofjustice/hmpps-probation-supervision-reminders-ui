@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/cookies.*"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "cookies": ""
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

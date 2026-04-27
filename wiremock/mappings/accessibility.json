@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/accessibility.*"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "accessibility": ""
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/privacy-policy.*"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "privacy": ""
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

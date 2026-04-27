@@ -26,9 +26,9 @@ describe('ProbationComponentsService', () => {
       },
     })
 
-    const reult = await probationComponentsService.getProbationFEComponents(['header', 'footer'], token)
+    const result = await probationComponentsService.getProbationFEComponents(['header', 'footer'], token)
 
-    expect(reult).toEqual({
+    expect(result).toEqual({
       header: {
         html: '<div>header</div>',
         css: ['/css/header.css'],

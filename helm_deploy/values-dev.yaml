@@ -18,6 +18,9 @@ generic-service:
     ENVIRONMENT_NAME: DEV
     AUDIT_ENABLED: "true"
     AUTHORISED_ROLE: "ROLE_MANAGE_SUPERVISIONS"
+    ACCESSIBILITY: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/accessibility"
+    COOKIES: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/cookies-policy"
+    PRIVACY: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/privacy-policy"
 
 generic-prometheus-alerts:
   alertSeverity: manage-people-on-probation-alerts-nonpro
