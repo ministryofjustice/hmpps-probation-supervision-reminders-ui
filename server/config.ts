@@ -43,6 +43,18 @@ export default {
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
+  probationFrontendComponents: {
+    connectSrc: get(
+      'PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC',
+      'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk',
+      requiredInProduction,
+    ),
+    fontSrc: get(
+      'PROBATION_FRONTEND_COMPONENTS_FONT_SRC',
+      'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk',
+      requiredInProduction,
+    ),
+  },
   session: {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
@@ -71,6 +83,42 @@ export default {
       },
       agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
+    },
+    probationFrontendComponentsApi: {
+      url: get('PROBATION_FRONTEND_COMPONENTS_API_URL', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
+    },
+    accessibility: {
+      url: get('ACCESSIBILITY', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
+    },
+    cookies: {
+      url: get('COOKIES', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
+    },
+    privacy: {
+      url: get('PRIVACY', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
     },
   },
   notify: {

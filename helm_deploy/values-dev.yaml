@@ -13,9 +13,14 @@ generic-service:
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     PROBATION_FRONTEND_COMPONENTS_API_URL: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk"
+    PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
+    PROBATION_FRONTEND_COMPONENTS_FONT_SRC: 'https://probation-frontend-components-dev.hmpps.service.justice.gov.uk'
     ENVIRONMENT_NAME: DEV
     AUDIT_ENABLED: "true"
     AUTHORISED_ROLE: "ROLE_MANAGE_SUPERVISIONS"
+    ACCESSIBILITY: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/accessibility"
+    COOKIES: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/cookies-policy"
+    PRIVACY: "https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/privacy-policy"
 
 generic-prometheus-alerts:
   alertSeverity: manage-people-on-probation-alerts-nonpro

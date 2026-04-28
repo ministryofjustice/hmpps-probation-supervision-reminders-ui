@@ -4,6 +4,13 @@ export declare module 'express-session' {
   // Declare that the session will potentially contain these additional fields
   interface SessionData {
     returnTo: string
+    feComponents: {
+      header: { html?: string; css?: string[]; javascript?: string[] } | undefined
+      footer: { html?: string; css?: string[]; javascript?: string[] } | undefined
+    }
+    cookiesTest: string
+    privacy: string
+    accessibility: string
   }
 }
 

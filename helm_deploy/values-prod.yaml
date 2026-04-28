@@ -9,8 +9,12 @@ generic-service:
     INGRESS_URL: "https://probation-supervision-reminders-ui.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
-    ROBATION_FRONTEND_COMPONENTS_API_URL: "https://probation-frontend-components.hmpps.service.justice.gov.uk"
+    PROBATION_FRONTEND_COMPONENTS_API_URL: "https://probation-frontend-components.hmpps.service.justice.gov.uk"
+    PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC: 'https://probation-frontend-components.hmpps.service.justice.gov.uk'
+    PROBATION_FRONTEND_COMPONENTS_FONT_SRC: 'https://probation-frontend-components.hmpps.service.justice.gov.uk'
     AUDIT_ENABLED: "false"
-
+    ACCESSIBILITY: "https://probation-frontend-components.hmpps.service.justice.gov.uk/accessibility"
+    COOKIES: "https://probation-frontend-components.hmpps.service.justice.gov.uk/cookies-policy"
+    PRIVACY: "https://probation-frontend-components.hmpps.service.justice.gov.uk/privacy-policy"
 generic-prometheus-alerts:
   alertSeverity: manage-people-on-probation-alerts

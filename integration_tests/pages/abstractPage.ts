@@ -15,12 +15,21 @@ export default class AbstractPage {
   /** link to manage user details */
   readonly manageUserDetails: Locator
 
+  readonly cookies: Locator
+
+  readonly accessibility: Locator
+
+  readonly privacy: Locator
+
   protected constructor(page: Page) {
     this.page = page
     this.phaseBanner = page.getByTestId('header-phase-banner')
     this.usersName = page.getByTestId('header-user-name')
     this.signoutLink = page.getByText('Sign out')
     this.manageUserDetails = page.getByTestId('manageDetails')
+    this.cookies = page.getByTestId('footer-cookies')
+    this.accessibility = page.getByTestId('footer-accessibility')
+    this.privacy = page.getByTestId('footer-privacy')
   }
 
   async signOut() {
