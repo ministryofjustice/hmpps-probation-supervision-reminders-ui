@@ -52,10 +52,9 @@ test.describe('Health', () => {
     test('Health check status is down', async ({ page }) => {
       const response = await page.request.get('/health')
       const payload = await response.json()
-      // eslint-disable-next-line no-console
-      console.log('PAYLOAD: ', payload)
       expect(payload.status).toBe('DOWN')
       expect(payload.components.hmppsAuth.status).toBe('UP')
+      expect(payload.components.tokenVerification.status).toBe('DOWN')
     })
   })
 })
