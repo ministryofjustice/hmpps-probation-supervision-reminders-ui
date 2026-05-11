@@ -52,6 +52,7 @@ test.describe('Health', () => {
     test('Health check status is down', async ({ page }) => {
       const response = await page.request.get('/health')
       const payload = await response.json()
+      console.log(payload)
       expect(payload.status).toBe('DOWN')
       expect(payload.components.hmppsAuth.status).toBe('UP')
       expect(payload.components.tokenVerification.status).toBe('DOWN')
