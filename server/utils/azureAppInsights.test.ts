@@ -1,76 +1,105 @@
-import { DataTelemetry, EnvelopeTelemetry } from 'applicationinsights/out/Declarations/Contracts'
-import { Contracts } from 'applicationinsights'
-import { ignoredDependenciesProcessor, ignoredRequestsProcessor } from './azureAppInsights'
+//  setup, defaultClient, TelemetryClient, DistributedTracingModes
+import * as applicationInsights from 'applicationinsights'
+import { defaultName, version, initialiseAppInsights, buildAppInsightsClient } from './azureAppInsights'
 
-const createEnvelope = (properties: Record<string, string | boolean>, baseType = 'RequestData') =>
-  ({
-    data: {
-      baseType,
-      baseData: { properties },
-    } as DataTelemetry,
-  }) as EnvelopeTelemetry
+const applicationName = 'mock application name'
+const mockVersion = '1_0_0'
 
-describe('azureAppInsights', () => {
-  describe('ignoredRequestsProcessor', () => {
-    it.each([
-      ['GET /assets/some.css', false],
-      ['GET /health', false],
-      ['GET /ping', false],
-      ['GET /info', false],
-      ['GET /something-else', true],
-      ['GET /something-else/random', true],
-      ['GET /sandwich/health/with-something-else', true],
-    ])(`Request '%s' logged by app insights when request is successful: '%s'`, (name: string, logged: boolean) => {
-      const envelope = createEnvelope({}, 'RequestData')
-      const requestData = new Contracts.RequestData()
-      requestData.name = name
-      requestData.success = true
-      envelope.data.baseData = requestData
-      expect(ignoredRequestsProcessor(envelope)).toBe(logged)
+jest.mock('../applicationInfo', () => ({
+  ...jest.requireActual('../applicationInfo'),
+  __esModule: true,
+  default: jest.fn(() => ({
+    applicationName,
+    version: mockVersion,
+    buildNumber: '',
+    gitRef: '',
+    gitShortHash: '#gitShortHash',
+    productId: '',
+    branchName: '',
+  })),
+}))
+
+jest.mock('applicationinsights', () => ({
+  ...jest.requireActual('../applicationinsights'),
+  __esModule: true,
+}))
+
+jest.mock('applicationinsights', () => ({
+  __esModule: true,
+  setup: jest.fn(() => ({
+    setDistributedTracingMode: jest.fn(() => ({
+      start: jest.fn(),
+    })),
+  })),
+  start: jest.fn().mockReturnThis(),
+  DistributedTracingModes: jest.fn(() => ({
+    AI_AND_W3C: 'ai_and_w3c',
+  })),
+  defaultClient: {
+    context: {
+      tags: {
+        'ai.cloud.role': 'mock-role',
+      },
+    },
+    addTelemetryProcessor: jest.fn(),
+  },
+}))
+
+describe('utils/azureAppInsights', () => {
+  describe('defaultName()', () => {
+    it('should return the application name', () => {
+      expect(defaultName()).toEqual(applicationName)
     })
-
-    it.each([
-      'GET /assets/some.css',
-      'GET /health',
-      'GET /ping',
-      'GET /info',
-      'GET /something-else',
-      'GET /something-else/random',
-      'GET /sandwich/health/with-something-else',
-    ])(`Request '%s' is logged by app insights when request is not successful`, (name: string) => {
-      const envelope = createEnvelope({}, 'RequestData')
-      const requestData = new Contracts.RequestData()
-      requestData.name = name
-      requestData.success = false
-      envelope.data.baseData = requestData
-      expect(ignoredRequestsProcessor(envelope)).toBe(true)
+  })
+  describe('version()', () => {
+    it('should return the build version', () => {
+      expect(version()).toEqual(mockVersion)
+    })
+  })
+  describe('initialiseAppInsights()', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log')
+    beforeEach(() => {
+      process.env.APPLICATIONINSIGHTS_CONNECTION_STRING = 'X1234'
+    })
+    it('should log to the console', () => {
+      initialiseAppInsights()
+      expect(consoleLogSpy).toHaveBeenCalledWith('Enabling azure application insights')
     })
   })
 
-  describe('ignoredDependenciesProcessor', () => {
-    it.each([
-      ['sqs.eu-west-2.amazonaws.com', false],
-      ['sqs.us-east-1.amazonaws.com', false],
-      ['anything.else', true],
-    ])(`Dependency '%s' logged by app insights when request is successful: '%s'`, (target: string, logged: boolean) => {
-      const envelope = createEnvelope({}, 'RemoteDependencyData')
-      const requestData = new Contracts.RemoteDependencyData()
-      requestData.target = target
-      requestData.success = true
-      envelope.data.baseData = requestData
-      expect(ignoredDependenciesProcessor(envelope)).toBe(logged)
+  describe('buildAppInsightsClient()', () => {
+    it('should call the setup()', () => {
+      process.env.APPLICATIONINSIGHTS_CONNECTION_STRING = 'X1234'
+      const setupSpy = jest.spyOn(applicationInsights, 'setup')
+      buildAppInsightsClient()
+      expect(applicationInsights.defaultClient.context.tags['ai.cloud.role']).toEqual(applicationName)
+      expect(applicationInsights.defaultClient.context.tags['ai.application.ver']).toEqual(mockVersion)
+      expect(setupSpy).toHaveBeenCalled()
     })
-
-    it.each(['sqs.eu-west-2.amazonaws.com', 'sqs.us-east-1.amazonaws.com', 'anything.else'])(
-      `Dependency '%s' is logged by app insights when request is not successful`,
-      (target: string) => {
-        const envelope = createEnvelope({}, 'RemoteDependencyData')
-        const requestData = new Contracts.RemoteDependencyData()
-        requestData.target = target
-        requestData.success = false
-        envelope.data.baseData = requestData
-        expect(ignoredDependenciesProcessor(envelope)).toBe(true)
-      },
-    )
+    it('should return the default client', () => {
+      process.env.APPLICATIONINSIGHTS_CONNECTION_STRING = 'X1234'
+      expect(buildAppInsightsClient()).toEqual(applicationInsights.defaultClient)
+    })
+    it('should return null if connection string is undefined', () => {
+      process.env.APPLICATIONINSIGHTS_CONNECTION_STRING = ''
+      expect(buildAppInsightsClient(applicationName)).toEqual(null)
+    })
+    it('addTelemetryProcessor()', () => {
+      process.env.APPLICATIONINSIGHTS_CONNECTION_STRING = 'X1234'
+      const addTelemetryProcessorMock = applicationInsights.defaultClient.addTelemetryProcessor as jest.Mock
+      const telemetryProcessor = addTelemetryProcessorMock.mock.calls[0][0]
+      const envelopeMock = {
+        data: {
+          baseData: {
+            url: '/ping',
+          },
+        },
+      }
+      const result = telemetryProcessor(envelopeMock)
+      expect(result).toBe(false)
+      envelopeMock.data.baseData.url = '/some-url'
+      const result2 = telemetryProcessor(envelopeMock)
+      expect(result2).toBe(true)
+    })
   })
 })

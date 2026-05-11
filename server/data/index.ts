@@ -9,7 +9,7 @@ import applicationInfoSupplier from '../applicationInfo'
 
 const applicationInfo = applicationInfoSupplier()
 initialiseAppInsights()
-buildAppInsightsClient(applicationInfo)
+buildAppInsightsClient(applicationInfo.applicationName)
 
 import { createRedisClient } from './redisClient'
 import config from '../config'
