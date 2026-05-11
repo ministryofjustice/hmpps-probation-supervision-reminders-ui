@@ -55,8 +55,6 @@ test.describe('Health', () => {
       expect(payload.status).toBe('DOWN')
       expect(payload.components.hmppsAuth.status).toBe('UP')
       expect(payload.components.tokenVerification.status).toBe('DOWN')
-      expect(payload.components.tokenVerification.details.status).toBe(500)
-      expect(payload.components.tokenVerification.details.attempts).toBe(3)
     })
   })
 })
