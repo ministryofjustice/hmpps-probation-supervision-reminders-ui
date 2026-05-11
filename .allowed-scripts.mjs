@@ -17,6 +17,6 @@ export default configureAllowedScripts({
     // Needed to supports locale_en values
     'node_modules/cldr-data@36.0.5': 'ALLOW',
     // Needed for appInsights v3
-    'node_modules/protobufjs@7.5.6': 'ALLOW',
+    'node_modules/protobufjs@7.5.7': 'ALLOW',
   },
 })
