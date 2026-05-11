@@ -31,15 +31,15 @@
     "npm": "^11"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.1040.0",
+    "@aws-sdk/client-sqs": "^3.1043.0",
     "@js-joda/core": "6.0.1",
     "@js-joda/locale": "5.1.0",
     "@js-joda/locale_en": "5.1.0",
     "@js-joda/timezone": "2.25.1",
     "@ministryofjustice/frontend": "^9.0.0",
     "@ministryofjustice/hmpps-auth-clients": "^1.0.2",
-    "@ministryofjustice/hmpps-monitoring": "^1.0.2",
-    "@ministryofjustice/hmpps-rest-client": "^1.2.0",
+    "@ministryofjustice/hmpps-monitoring": "^1.1.0",
+    "@ministryofjustice/hmpps-rest-client": "^1.2.1",
     "@types/qs": "6.15.0",
     "applicationinsights": "^2.9.8",
     "bunyan": "^1.8.15",
@@ -106,7 +106,7 @@
   "overrides": {
     "@isaacs/brace-expansion": "^5.0.1",
     "diff": "9.0.0",
-    "axios": "^1.14.0",
+    "axios": "^1.16.0",
     "flatted": "^3.4.2"
   }
 }
