@@ -14,7 +14,7 @@
     "start-feature:dev": "concurrently -k -n 'WireMock,Build' \"npm run wiremock\" \"node esbuild/esbuild --watch --env feature.env\"",
     "wiremock": "npx wiremock --port 9091 --root-dir wiremock --local-response-templating",
     "lint": "eslint . --cache --max-warnings 0",
-    "lint-fix": "eslint . --cache --max-warnings 0 --fix",
+    "lint:fix": "eslint . --cache --max-warnings 0 --fix",
     "typecheck": "tsc && tsc -p integration_tests",
     "test": "jest",
     "test:ci": "jest --runInBand",
@@ -100,8 +100,7 @@
     "node-mocks-http": "^1.17.2",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.9",
-    "typescript": "^6.0.3",
-    "node-mocks-http": "^1.17.2"
+    "typescript": "^6.0.3"
   },
   "overrides": {
     "@isaacs/brace-expansion": "^5.0.1",
