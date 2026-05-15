@@ -15,7 +15,7 @@ generic-service:
     PROBATION_FRONTEND_COMPONENTS_CONNECT_SRC: 'https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk'
     PROBATION_FRONTEND_COMPONENTS_FONT_SRC: 'https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk'
     ENVIRONMENT_NAME: PRE-PRODUCTION
-    AUDIT_ENABLED: "false"
+    AUTHORISED_ROLE: "ROLE_ADMIN_SUPERVISIONS"
     ACCESSIBILITY: "https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk/accessibility"
     COOKIES: "https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk/cookies-policy"
     PRIVACY: "https://probation-frontend-components-preprod.hmpps.service.justice.gov.uk/privacy-policy"
