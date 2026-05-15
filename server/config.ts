@@ -128,6 +128,9 @@ export default {
   sqs: {
     audit: auditConfig(),
   },
+  appInsights: {
+    connectionString: get('APPLICATIONINSIGHTS_CONNECTION_STRING', null, requiredInProduction),
+  },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
   authorisedRole: get('AUTHORISED_ROLE', 'false'),

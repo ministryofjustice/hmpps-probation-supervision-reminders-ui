@@ -61,7 +61,11 @@ describe('setUpWebSecurity', () => {
 
     expect(helmetOptions.crossOriginEmbedderPolicy).toBe(true)
     if (typeof helmetOptions.contentSecurityPolicy === 'object') {
-      expect(helmetOptions.contentSecurityPolicy.directives.defaultSrc).toEqual(["'self'"])
+      expect(helmetOptions.contentSecurityPolicy.directives.defaultSrc).toEqual([
+        "'self'",
+        'js.monitor.azure.com',
+        '*.applicationinsights.azure.com/v2/track',
+      ])
       expect(helmetOptions.contentSecurityPolicy.directives.formAction).toEqual([
         `'self' ${config.apis.hmppsAuth.externalUrl}`,
       ])
