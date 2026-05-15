@@ -18,7 +18,4 @@ const validatePort = (port: number) => {
 const metricsPort = validatePort(metricsApp.get('port'))
 metricsApp.listen(metricsPort, () => {
   logger.info(`Metrics server listening on port ${metricsPort}`)
-  logger.info(`Metrics server listening on port ${process.env.PORT}`)
-  logger.info(`Metrics server listening on port ${process.env.APPINSIGHTS_INSTRUMENTATIONKEY}`)
-  logger.info(`Metrics server listening on port ${process.env.APPLICATIONINSIGHTS_CONNECTION_STRING}`)
 })
