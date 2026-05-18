@@ -11,7 +11,6 @@ import { CorrelationContext } from 'applicationinsights/out/AutoCollection/Corre
 import { EnvelopeTelemetry } from 'applicationinsights/out/Declarations/Contracts'
 import type { ApplicationInfo } from '../applicationInfo'
 import applicationInfo from '../applicationInfo'
-import config from '../config'
 
 const requestPrefixesToIgnore = ['GET /assets/', 'GET /health', 'GET /ping', 'GET /info']
 const dependencyPrefixesToIgnore = ['sqs']
@@ -93,8 +92,6 @@ export function appInsightsMiddleware(): RequestHandler {
         context.customProperties.setProperty('operationName', `${req.method} ${pathToReport}`)
       }
     })
-    res.locals.applicationInsightsConnectionString = config.appInsights.connectionString
-    res.locals.applicationInsightsRoleName = defaultName()
     next()
   }
 }

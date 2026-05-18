@@ -25,7 +25,7 @@
   </script>
   <script nonce="{{ cspNonce }}">
     document.addEventListener('DOMContentLoaded', function () {
-      document.initialiseTelemetry('{{ applicationInsightsConnectionString | default('') }}', '{{ applicationInsightsRoleName }}', '{{ user.username }}')
+      document.initialiseTelemetry('{{ applicationInsightsConnectionString | default('') }}', '{{ applicationInsightsRoleName }}', '{{ user.userId }}')
     })
   </script>
 {% endblock %}

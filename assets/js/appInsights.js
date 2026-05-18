@@ -4,7 +4,7 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js'
 
-document.initialiseTelemetry = (applicationInsightsConnectionString, applicationInsightsRoleName, userName) => {
+document.initialiseTelemetry = (applicationInsightsConnectionString, applicationInsightsRoleName, userId) => {
   if (!applicationInsightsConnectionString) {
     console.log('AppInsights not configured')
     return
@@ -57,7 +57,7 @@ document.initialiseTelemetry = (applicationInsightsConnectionString, application
 
   const telemetryInitializer = envelope => {
     envelope.tags['ai.cloud.role'] = applicationInsightsRoleName
-    envelope.tags['ai.user.id'] = userName
+    envelope.tags['ai.user.id'] = userId
   }
 
   appInsights.loadAppInsights()
