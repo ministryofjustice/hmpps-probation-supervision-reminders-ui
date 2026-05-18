@@ -22,10 +22,10 @@ document.initialiseTelemetry = (applicationInsightsConnectionString, application
     if (uri && uri.includes('Select case record')) {
       return 'Search Persons Name Link'
     }
-    if (element.className === 'moj-filter__tag') {
+    if (element.classList.contains('moj-filter__tag')) {
       return 'Clear Filter Tag'
     }
-    if (element.className.includes('moj-datepicker')) {
+    if (element.classList.contains('moj-datepicker')) {
       return 'Date selected'
     }
     return ''
