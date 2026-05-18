@@ -1,5 +1,4 @@
 import httpMocks from 'node-mocks-http'
-import baseController from './baseController'
 import config from './config'
 import { defaultName } from './utils/azureAppInsights'
 
@@ -24,17 +23,27 @@ describe('baseController', () => {
   })
 
   it('should set application insights connection string and role name in res.locals', () => {
-    baseController()(req, res, next)
+    // Reset the module to ensure applicationInsightsRoleName is re-evaluated with the mock
+    jest.isolateModules(() => {
+      // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
+      const baseController = require('./baseController').default
+      baseController()(req, res, next)
+    })
 
     expect(res.locals.applicationInsightsConnectionString).toBe('test-connection-string')
     expect(res.locals.applicationInsightsRoleName).toBe('test-role-name')
     expect(next).toHaveBeenCalled()
+    expect(defaultName).toHaveBeenCalledTimes(1)
   })
 
   it('should use connection string from config', () => {
     config.appInsights.connectionString = 'another-connection-string'
 
-    baseController()(req, res, next)
+    jest.isolateModules(() => {
+      // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
+      const baseController = require('./baseController').default
+      baseController()(req, res, next)
+    })
 
     expect(res.locals.applicationInsightsConnectionString).toBe('another-connection-string')
     expect(next).toHaveBeenCalled()
