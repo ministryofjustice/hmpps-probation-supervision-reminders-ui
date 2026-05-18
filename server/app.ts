@@ -16,10 +16,12 @@ import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
 import getFrontendComponents from './middleware/probationFEComponentsMiddleware'
+import { metricsMiddleware } from './monitoring/metricsApp'
 
 import routes from './routes'
 import type { Services } from './services'
 import config from './config'
+import baseController from './baseController'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -34,12 +36,14 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpWebSession())
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
+  app.use(baseController())
   nunjucksSetup(app)
   app.use(setUpAuthentication())
   app.use(authorisationMiddleware([config.authorisedRole]))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser())
   app.use(getFrontendComponents(services.probationComponentsService))
+  app.use(metricsMiddleware)
 
   app.use(routes(services))
 
