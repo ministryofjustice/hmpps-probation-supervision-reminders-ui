@@ -181,7 +181,7 @@ describe('Reminders routes', () => {
 
       const notificationRes = await renderPageWithRoute('/notification/test-id-1')
 
-      expect(notificationRes.text).toContain('Test reminder message')
+      expect((notificationRes.text.match(/Test reminder message/g) ?? []).length).toBe(1)
       expect(mockGetNotifications).not.toHaveBeenCalled()
     })
 
