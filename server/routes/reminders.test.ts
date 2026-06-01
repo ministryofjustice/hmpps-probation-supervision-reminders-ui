@@ -164,7 +164,7 @@ describe('Reminders routes', () => {
       expect(mockGetNotifications).toHaveBeenCalledWith('sms', null, 'ABC123', 'test-id-1')
     })
 
-    it('gets SMS notifications without a reference and with olderThanId when CRN is missing for manual resend', async () => {
+    it('gets SMS notifications without undefined reference and with olderThanId when CRN is missing for manual resend', async () => {
       mockGetNotificationById.mockResolvedValueOnce({
         data: manualResendNotification,
       })
