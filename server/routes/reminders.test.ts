@@ -164,43 +164,25 @@ describe('Reminders routes', () => {
       expect(mockGetNotifications).toHaveBeenCalledWith('sms', null, 'ABC123', 'test-id-1')
     })
 
-    it('gets SMS notifications without undefined reference and with olderThanId when CRN is missing for manual resend', async () => {
+    it('does not get notification history when CRN is missing for manual resend', async () => {
       mockGetNotificationById.mockResolvedValueOnce({
         data: manualResendNotification,
       })
 
       await renderPageWithRoute('/notification/test-id-1')
 
-      expect(mockGetNotifications).toHaveBeenCalledWith('sms', null, undefined, 'test-id-1')
+      expect(mockGetNotifications).not.toHaveBeenCalled()
     })
 
-    it('filters manual resend notification history by phone number when CRN is missing', async () => {
+    it('renders only the current notification when CRN is missing for manual resend', async () => {
       mockGetNotificationById.mockResolvedValueOnce({
         data: manualResendNotification,
       })
 
-      mockGetNotifications.mockResolvedValueOnce({
-        data: {
-          notifications: [
-            {
-              ...manualResendNotification,
-              id: 'matching-phone-number-id',
-              body: 'Matching phone number message',
-            },
-            {
-              ...manualResendNotification,
-              id: 'different-phone-number-id',
-              phone_number: '0700-different',
-              body: 'Different phone number message',
-            },
-          ],
-        },
-      })
-
       const notificationRes = await renderPageWithRoute('/notification/test-id-1')
 
-      expect(notificationRes.text).toContain('Matching phone number message')
-      expect(notificationRes.text).not.toContain('Different phone number message')
+      expect(notificationRes.text).toContain('Test reminder message')
+      expect(mockGetNotifications).not.toHaveBeenCalled()
     })
 
     it('sets the href on the back button to the previous page', async () => {
