@@ -90,8 +90,14 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     const notification = (await notifyClient.getNotificationById(req.params.id)).data
     const templateName = (await notifyClient.getTemplateById(notification.template.id)).data.name
     const crn = notification.reference
-    const previousNotifications = (await notifyClient.getNotifications('sms', null, crn, req.params.id)).data
-      .notifications
+
+    // when manual resend is done in gov notify, crn is not populated
+    const { data } = crn
+      ? await notifyClient.getNotifications('sms', null, crn, req.params.id)
+      : await notifyClient.getNotifications('sms', null, req.params.id)
+
+    const previousNotifications = data.notifications
+
     res.render('pages/notification', {
       notification,
       templateName,
