@@ -1,8 +1,8 @@
 import request from 'supertest'
 import { LocalDate } from '@js-joda/core'
-import { Notification } from 'notifications-node-client'
+import type { Notification } from 'notifications-node-client'
 import { appWithAllRoutes, user } from './testutils/appSetup'
-import { Services } from '../services'
+import type { Services } from '../services'
 import { Page } from '../services/auditService'
 
 const mockApiNotification: Notification = {
