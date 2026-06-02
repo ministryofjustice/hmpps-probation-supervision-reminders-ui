@@ -90,8 +90,11 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     const notification = (await notifyClient.getNotificationById(req.params.id)).data
     const templateName = (await notifyClient.getTemplateById(notification.template.id)).data.name
     const crn = notification.reference
-    const previousNotifications = (await notifyClient.getNotifications('sms', null, crn, req.params.id)).data
-      .notifications
+
+    const previousNotifications = crn
+      ? (await notifyClient.getNotifications('sms', null, crn, req.params.id)).data.notifications
+      : []
+
     res.render('pages/notification', {
       notification,
       templateName,
