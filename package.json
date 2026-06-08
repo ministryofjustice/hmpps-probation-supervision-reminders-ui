@@ -31,7 +31,7 @@
     "npm": "^11"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.1057.0",
+    "@aws-sdk/client-sqs": "^3.1060.0",
     "@js-joda/core": "6.0.1",
     "@js-joda/locale": "5.1.0",
     "@js-joda/locale_en": "5.1.0",
@@ -45,7 +45,7 @@
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
     "compression": "^1.8.1",
-    "concurrently": "10.0.0",
+    "concurrently": "10.0.3",
     "connect-flash": "^0.1.1",
     "connect-redis": "^9.0.0",
     "csrf-sync": "^4.2.1",
@@ -99,7 +99,7 @@
     "jest-html-reporter": "^4.4.0",
     "jest-junit": "^17.0.0",
     "jsonwebtoken": "^9.0.3",
-    "lint-staged": "^17.0.6",
+    "lint-staged": "^17.0.7",
     "nock": "^14.0.15",
     "node-mocks-http": "^1.17.2",
     "supertest": "^7.2.2",
@@ -109,7 +109,7 @@
   "overrides": {
     "@isaacs/brace-expansion": "^5.0.1",
     "diff": "9.0.0",
-    "axios": "^1.16.1",
+    "axios": "^1.17.0",
     "flatted": "^3.4.2"
   }
 }
