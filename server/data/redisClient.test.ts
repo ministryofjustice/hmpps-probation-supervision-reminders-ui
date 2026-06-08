@@ -1,5 +1,5 @@
 import { createClient } from 'redis'
-import { createRedisClient } from './redisClient'
+import createRedisClient from './redisClient'
 import config from '../config'
 import logger from '../../logger'
 
