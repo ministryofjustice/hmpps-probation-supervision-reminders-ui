@@ -3,6 +3,7 @@ import hmppsAuth from '../mockApis/hmppsAuth'
 import tokenVerification from '../mockApis/tokenVerification'
 import probationFrontendComponentsApi from '../mockApis/probationFrontendComponentsApi'
 import cookies from '../mockApis/cookies'
+import mpop from '../mockApis/mpop'
 import accessibility from '../mockApis/accessibility'
 import privacyPolicy from '../mockApis/privacyPolicy'
 
@@ -22,6 +23,7 @@ test.describe('Health', () => {
         cookies.stubPing(),
         accessibility.stubPing(),
         privacyPolicy.stubPing(),
+        mpop.stubPing(),
       ])
     })
 
