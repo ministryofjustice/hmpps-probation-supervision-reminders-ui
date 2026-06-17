@@ -120,6 +120,15 @@ export default {
       },
       agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
     },
+    manageProbationUrl: {
+      url: get('MANAGE_PEOPLE_ON_PROBATION_URL', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
+      timeout: {
+        response: Number(get('MANAGE_PEOPLE_ON_PROBATION_URL_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('MANAGE_PEOPLE_ON_PROBATION_URL_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('PROBATION_FRONTEND_COMPONENTS_API_TIMEOUT_RESPONSE', 10000))),
+    },
   },
   notify: {
     customUrl: get('NOTIFY_API_KEY', false) === false ? 'http://localhost:9091/notifications-api' : undefined,

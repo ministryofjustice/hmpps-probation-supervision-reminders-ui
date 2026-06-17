@@ -200,5 +200,11 @@ describe('Reminders routes', () => {
 
       expect(notificationRes.text).toContain('href="/"')
     })
+
+    it('renders the manage probation appointments link', async () => {
+      const notificationRes = await renderPageWithRoute('/notification/test-id-1')
+
+      expect(notificationRes.text).toContain('href="http://localhost:8100/case/ABC123/appointments"')
+    })
   })
 })

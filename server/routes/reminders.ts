@@ -94,12 +94,14 @@ export default function reminderRoutes(router: Router, { auditService }: Service
     const previousNotifications = crn
       ? (await notifyClient.getNotifications('sms', null, crn, req.params.id)).data.notifications
       : []
-
+    const mPoPAppointmentsLink = crn ? `${config.apis.manageProbationUrl.url}/case/${crn}/appointments` : null
     res.render('pages/notification', {
       notification,
       templateName,
       previousNotifications,
       backLink: req.session.returnTo ?? '/',
+      mPoPAppointmentsLink,
+      crn,
     })
   })
   return router
