@@ -13,7 +13,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <p class="govuk-body">
-        '{{ templateName }}' was sent to {{ notification.phone_number }}.
+        '{{ templateName }}' was sent to {% if managePeopleOnProbationAppointmentsLink %}<a class="govuk-link" href="{{ managePeopleOnProbationAppointmentsLink }}">{{ crn }}</a>.{% else %}{{ notification.phone_number }}.{% endif %}
       </p>
     </div>
     <div class="govuk-grid-column-one-half-from-desktop">
@@ -27,7 +27,8 @@
                 datetime="{{ notification.sent_at }}">{{ notification.sent_at | parseDate | formatDate('h:mma') }}</time>
         </div>
       </div>
-      <div class="govuk-!-width-full govuk-!-text-align-right secondary-text">{{ notification.status }}</div>
+     <div class="govuk-!-width-full govuk-!-text-align-right secondary-text"><span class="govuk-!-margin-right-4">Status:  {{ notification.status }}</span></div>
+     <div class="govuk-!-width-full govuk-!-text-align-right secondary-text"><span class="govuk-!-margin-right-4">To:  {{ notification.phone_number }}</span></div>
 
       {% for previousNotification in previousNotifications %}
         <time datetime="{{ previousNotification.sent_at }}"
@@ -40,7 +41,8 @@
                   datetime="{{ previousNotification.sent_at }}">{{ previousNotification.sent_at | parseDate | formatDate('h:mma') }}</time>
           </div>
         </div>
-        <div class="govuk-!-width-full govuk-!-text-align-right secondary-text">{{ previousNotification.status }}</div>
+        <div class="govuk-!-width-full govuk-!-text-align-right secondary-text"><span class="govuk-!-margin-right-4">Status:  {{ previousNotification.status }}</span></div>
+        <div class="govuk-!-width-full govuk-!-text-align-right secondary-text"><span class="govuk-!-margin-right-4">To:  {{ previousNotification.phone_number }}</span></div>
       {% endfor %}
     </div>
   </div>

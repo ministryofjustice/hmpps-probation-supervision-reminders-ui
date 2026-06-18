@@ -200,5 +200,22 @@ describe('Reminders routes', () => {
 
       expect(notificationRes.text).toContain('href="/"')
     })
+
+    it('renders the manage probation appointments link', async () => {
+      const notificationRes = await renderPageWithRoute('/notification/test-id-1')
+
+      expect(notificationRes.text).toContain('href="http://localhost:8100/case/ABC123/appointments"')
+    })
+
+    it('Render phone number instead of appointments link if CRN is missing', async () => {
+      mockGetNotificationById.mockResolvedValueOnce({
+        data: manualResendNotification,
+      })
+
+      const notificationRes = await renderPageWithRoute('/notification/test-id-1')
+
+      expect(notificationRes.text).not.toContain('/appointments')
+      expect(notificationRes.text).toContain('0800-test')
+    })
   })
 })
