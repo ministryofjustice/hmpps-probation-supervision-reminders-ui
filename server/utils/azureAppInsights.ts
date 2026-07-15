@@ -1,23 +1,37 @@
 import {
-  Contracts,
   defaultClient,
   DistributedTracingModes,
   getCorrelationContext,
   setup,
   type TelemetryClient,
 } from 'applicationinsights'
-import { Request, RequestHandler } from 'express'
-import { CorrelationContext } from 'applicationinsights/out/AutoCollection/CorrelationContextManager'
-import { EnvelopeTelemetry } from 'applicationinsights/out/Declarations/Contracts'
+import { RequestHandler } from 'express'
 import type { ApplicationInfo } from '../applicationInfo'
 import applicationInfo from '../applicationInfo'
 
 const requestPrefixesToIgnore = ['GET /assets/', 'GET /health', 'GET /ping', 'GET /info']
 const dependencyPrefixesToIgnore = ['sqs']
 
-export type ContextObject = {
-  ['http.ServerRequest']?: Request
-  correlationContext?: CorrelationContext
+let processorsRegistered = false
+
+interface TelemetryEnvelope {
+  tags?: Record<string, string>
+  data?: {
+    baseType?: string
+    baseData?: {
+      name?: string
+      target?: string
+      success?: boolean
+    }
+  }
+}
+
+interface TelemetryContextObjects {
+  correlationContext?: {
+    customProperties?: {
+      getProperty(name: string): string | undefined
+    }
+  }
 }
 
 export function defaultName(): string {
@@ -30,68 +44,115 @@ export function initialiseAppInsights(): void {
     // eslint-disable-next-line no-console
     console.log('Enabling azure application insights')
 
+    if (!process.env.APPLICATIONINSIGHTS_ROLE_NAME) {
+      const name = defaultName()
+      if (name) {
+        process.env.APPLICATIONINSIGHTS_ROLE_NAME = name
+        process.env.OTEL_SERVICE_NAME = name
+      }
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(`Setting up App Insights with role name: ${process.env.APPLICATIONINSIGHTS_ROLE_NAME}`)
+
     setup().setDistributedTracingMode(DistributedTracingModes.AI_AND_W3C).start()
   }
+}
+
+export function cloudRoleProcessor(envelope: unknown): boolean {
+  const telemetry = envelope as TelemetryEnvelope
+
+  if (telemetry.tags) {
+    const roleName = process.env.APPLICATIONINSIGHTS_ROLE_NAME ?? process.env.OTEL_SERVICE_NAME ?? defaultName()
+
+    if (roleName) {
+      telemetry.tags['ai.cloud.role'] = roleName
+    }
+  }
+
+  return true
 }
 
 export function buildAppInsightsClient(
   { applicationName, buildNumber }: ApplicationInfo,
   overrideName?: string,
-): TelemetryClient {
-  if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
-    defaultClient.context.tags['ai.cloud.role'] = overrideName || applicationName
-    defaultClient.context.tags['ai.application.ver'] = buildNumber
-    defaultClient.addTelemetryProcessor(parameterisePaths)
+): TelemetryClient | null {
+  if (!process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+    return null
+  }
+
+  defaultClient.context.tags['ai.cloud.role'] = overrideName || applicationName
+  defaultClient.context.tags['ai.application.ver'] = buildNumber
+
+  if (!processorsRegistered) {
+    defaultClient.addTelemetryProcessor(addOperationNameProcessor)
+    defaultClient.addTelemetryProcessor(cloudRoleProcessor)
     defaultClient.addTelemetryProcessor(ignoredRequestsProcessor)
     defaultClient.addTelemetryProcessor(ignoredDependenciesProcessor)
-    return defaultClient
+    processorsRegistered = true
   }
-  return null
+
+  return defaultClient
 }
 
-function parameterisePaths(envelope: EnvelopeTelemetry, contextObjects: ContextObject) {
-  const operationNameOverride = contextObjects.correlationContext?.customProperties?.getProperty('operationName')
-  if (operationNameOverride) {
-    /*  eslint-disable no-param-reassign */
-    envelope.tags['ai.operation.name'] = operationNameOverride
-    envelope.data.baseData.name = operationNameOverride
-    /*  eslint-enable no-param-reassign */
+export function addOperationNameProcessor(envelope: unknown, contextObjects: unknown): boolean {
+  const telemetry = envelope as TelemetryEnvelope
+  const context = contextObjects as TelemetryContextObjects
+
+  const operationNameOverride = context.correlationContext?.customProperties?.getProperty('operationName')
+
+  if (operationNameOverride && telemetry.tags && telemetry.data?.baseData) {
+    telemetry.tags['ai.operation.name'] = operationNameOverride
+    telemetry.data.baseData.name = operationNameOverride
   }
   return true
 }
 
-export function ignoredRequestsProcessor(envelope: EnvelopeTelemetry) {
-  if (envelope.data.baseType === Contracts.TelemetryTypeString.Request) {
-    const requestData = envelope.data.baseData
-    if (requestData instanceof Contracts.RequestData && requestData.success) {
-      const { name } = requestData
-      return requestPrefixesToIgnore.every(prefix => !name.startsWith(prefix))
-    }
+export function ignoredRequestsProcessor(envelope: unknown): boolean {
+  const telemetry = envelope as TelemetryEnvelope
+
+  if (telemetry.data?.baseType !== 'RequestData') {
+    return true
   }
-  return true
+
+  const telemetryItem = telemetry.data.baseData
+
+  return !(
+    telemetryItem?.success &&
+    typeof telemetryItem.name === 'string' &&
+    requestPrefixesToIgnore.some(prefix => telemetryItem.name.startsWith(prefix))
+  )
 }
 
-export function ignoredDependenciesProcessor(envelope: EnvelopeTelemetry) {
-  if (envelope.data.baseType === Contracts.TelemetryTypeString.Dependency) {
-    const dependencyData = envelope.data.baseData
-    if (dependencyData instanceof Contracts.RemoteDependencyData && dependencyData.success) {
-      const { target } = dependencyData
-      return dependencyPrefixesToIgnore.every(prefix => !target.startsWith(prefix))
-    }
+export function ignoredDependenciesProcessor(envelope: unknown): boolean {
+  const telemetry = envelope as TelemetryEnvelope
+
+  if (telemetry.data?.baseType !== 'RemoteDependencyData') {
+    return true
   }
-  return true
+
+  const telemetryItem = telemetry.data.baseData
+
+  return !(
+    telemetryItem?.success &&
+    typeof telemetryItem.target === 'string' &&
+    dependencyPrefixesToIgnore.some(prefix => telemetryItem.target.startsWith(prefix))
+  )
 }
 
 export function appInsightsMiddleware(): RequestHandler {
   return (req, res, next) => {
     res.prependOnceListener('finish', () => {
       const context = getCorrelationContext()
+
       if (context && req.route) {
-        const path = req.route?.path
+        const { path } = req.route
         const pathToReport = Array.isArray(path) ? `"${path.join('" | "')}"` : path
+
         context.customProperties.setProperty('operationName', `${req.method} ${pathToReport}`)
       }
     })
+
     next()
   }
 }
