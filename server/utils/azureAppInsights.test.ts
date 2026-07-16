@@ -1,3 +1,10 @@
+import {
+  addOperationNameProcessor,
+  cloudRoleProcessor,
+  ignoredDependenciesProcessor,
+  ignoredRequestsProcessor,
+} from './azureAppInsights'
+
 type RequestData = { name: string; success: boolean } & Record<string, unknown>
 type RemoteDependencyData = { target: string; success: boolean } & Record<string, unknown>
 interface TelemetryItem {
@@ -9,12 +16,6 @@ interface TelemetryItem {
   time?: unknown
   name?: string
 }
-import {
-  addOperationNameProcessor,
-  cloudRoleProcessor,
-  ignoredDependenciesProcessor,
-  ignoredRequestsProcessor,
-} from './azureAppInsights'
 
 interface TestEnvelope {
   tags: Record<string, string>
