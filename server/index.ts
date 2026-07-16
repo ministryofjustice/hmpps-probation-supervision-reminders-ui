@@ -6,7 +6,7 @@ import { buildAppInsightsClient } from './utils/azureAppInsights'
 import applicationInfoSupplier from './applicationInfo'
 
 const applicationInfo = applicationInfoSupplier()
-buildAppInsightsClient(applicationInfo, 'overrode name')
+buildAppInsightsClient(applicationInfo)
 
 promClient.collectDefaultMetrics()
 const app = createApp(services())

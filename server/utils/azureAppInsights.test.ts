@@ -109,15 +109,23 @@ describe('azureAppInsights', () => {
 
   describe('cloudRoleProcessor', () => {
     it('should set cloud role name from environment variable', () => {
-      process.env.APPLICATIONINSIGHTS_ROLE_NAME = 'test-role'
+      const originalRoleName = process.env.APPLICATIONINSIGHTS_ROLE_NAME
+      try {
+        process.env.APPLICATIONINSIGHTS_ROLE_NAME = 'test-role'
+        const envelope = {
+          tags: {} as Record<string, string>,
+        }
 
-      const envelope = {
-        tags: {} as Record<string, string>,
+        cloudRoleProcessor(envelope)
+
+        expect(envelope.tags['ai.cloud.role']).toBe('test-role')
+      } finally {
+        if (originalRoleName === undefined) {
+          delete process.env.APPLICATIONINSIGHTS_ROLE_NAME
+        } else {
+          process.env.APPLICATIONINSIGHTS_ROLE_NAME = originalRoleName
+        }
       }
-
-      cloudRoleProcessor(envelope)
-
-      expect(envelope.tags['ai.cloud.role']).toBe('test-role')
     })
   })
 
