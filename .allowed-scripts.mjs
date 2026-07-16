@@ -10,11 +10,11 @@ export default configureAllowedScripts({
     'node_modules/esbuild@0.28.1': 'ALLOW',
     // Needed by jest for running tests in watch mode
     'node_modules/fsevents@2.3.3': 'ALLOW',
-    // Need by playwright for detecting file system changes during test runs
+    // Needed by playwright for detecting file system changes during test runs
     'node_modules/playwright/node_modules/fsevents@2.3.2': 'ALLOW',
     // Native solution to quickly resolve module paths, used by jest and eslint
     'node_modules/unrs-resolver@1.11.1': 'ALLOW',
-    // Need by applicationinsights version update
+    // Needed by applicationinsights version update
     'node_modules/protobufjs@7.6.5': 'ALLOW',
   },
 })

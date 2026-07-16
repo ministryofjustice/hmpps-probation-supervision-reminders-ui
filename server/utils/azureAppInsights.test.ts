@@ -1,4 +1,14 @@
-import { TelemetryItem, RequestData, RemoteDependencyData } from 'applicationinsights/out/src/declarations/generated'
+type RequestData = { name: string; success: boolean } & Record<string, unknown>
+type RemoteDependencyData = { target: string; success: boolean } & Record<string, unknown>
+interface TelemetryItem {
+  tags?: Record<string, string>
+  data: {
+    baseType: string
+    baseData: RequestData | RemoteDependencyData | Record<string, unknown>
+  }
+  time?: unknown
+  name?: string
+}
 import {
   addOperationNameProcessor,
   cloudRoleProcessor,
