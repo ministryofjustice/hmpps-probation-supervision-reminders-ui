@@ -31,7 +31,7 @@
     "npm": "^11"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.1109.0",
+    "@aws-sdk/client-sqs": "^3.1110.0",
     "@js-joda/core": "6.1.0",
     "@js-joda/locale": "5.2.0",
     "@js-joda/locale_en": "5.2.0",
@@ -71,7 +71,7 @@
     "@jgoz/esbuild-plugin-typecheck": "^4.0.4",
     "@ministryofjustice/eslint-config-hmpps": "^1.0.3",
     "@ministryofjustice/hmpps-npm-script-allowlist": "0.0.6",
-    "@ministryofjustice/hmpps-precommit-hooks": "^3.0.1",
+    "@ministryofjustice/hmpps-precommit-hooks": "^3.0.2",
     "@playwright/test": "^1.62.1",
     "@tsconfig/node24": "^24.0.4",
     "@types/bunyan": "^1.8.11",
@@ -112,7 +112,7 @@
     "axios": "^1.19.0",
     "flatted": "^3.4.4",
     "form-data": "^4.0.6",
-    "js-yaml": "5.2.3",
+    "js-yaml": "5.3.0",
     "@opentelemetry/core": "2.10.0",
     "ip-address": "^10.5.0",
     "@opentelemetry/propagator-jaeger": "^2.10.0"
