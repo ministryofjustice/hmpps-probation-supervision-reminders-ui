@@ -31,7 +31,7 @@
     "npm": "^12"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.1120.0",
+    "@aws-sdk/client-sqs": "^3.1122.0",
     "@js-joda/core": "6.1.0",
     "@js-joda/locale": "5.2.0",
     "@js-joda/locale_en": "5.2.0",
@@ -112,9 +112,9 @@
     "flatted": "^3.4.4",
     "form-data": "^4.0.6",
     "js-yaml": "5.4.1",
-    "@opentelemetry/core": "2.10.0",
-    "ip-address": "^10.5.0",
-    "@opentelemetry/propagator-jaeger": "^2.10.0",
+    "@opentelemetry/core": "2.11.0",
+    "ip-address": "^10.7.0",
+    "@opentelemetry/propagator-jaeger": "^2.11.0",
     "qs": "^6.16.0",
     "@humanfs/node": "0.16.8"
   },
