@@ -31,7 +31,7 @@
     "npm": "^12"
   },
   "dependencies": {
-    "@aws-sdk/client-sqs": "^3.1125.0",
+    "@aws-sdk/client-sqs": "^3.1126.0",
     "@js-joda/core": "6.1.0",
     "@js-joda/locale": "5.2.0",
     "@js-joda/locale_en": "5.2.0",
