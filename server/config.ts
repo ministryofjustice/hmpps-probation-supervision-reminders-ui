@@ -131,7 +131,13 @@ export default {
     },
   },
   notify: {
-    customUrl: get('NOTIFY_API_KEY', false) === false ? 'http://localhost:9091/notifications-api' : undefined,
+    // No NOTIFY_API_KEY means we're not talking to real GOV.UK Notify, so point at a mocked endpoint instead.
+    // NOTIFY_API_URL lets each environment say where that mock lives (e.g. localhost:9091 for local dev outside
+    // Docker vs the wiremock service name/port when the app itself is also running in a Docker network).
+    customUrl:
+      get('NOTIFY_API_KEY', false) === false
+        ? get('NOTIFY_API_URL', 'http://localhost:9091/notifications-api')
+        : undefined,
     apiKey: get('NOTIFY_API_KEY', 'test', requiredInProduction),
   },
   sqs: {
