@@ -1,10 +1,10 @@
 const path = require('node:path')
 const { copy } = require('esbuild-plugin-copy')
 const { sassPlugin } = require('esbuild-sass-plugin')
-const { clean } = require('esbuild-plugin-clean')
 const manifestPlugin = require('esbuild-plugin-manifest')
 const { globSync } = require('node:fs')
 const { buildNotificationPlugin } = require('./utils')
+const { cleanPathsPlugin } = require('./file-ops.plugins')
 
 /**
  * Copy additional assets into distribution
@@ -34,7 +34,7 @@ const getAssetsConfig = buildConfig => ({
   external: ['/assets/*'],
   bundle: true,
   plugins: [
-    clean({
+    cleanPathsPlugin({
       patterns: globSync(buildConfig.assets.clear),
     }),
     manifestPlugin({
