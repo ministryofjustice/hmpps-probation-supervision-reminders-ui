@@ -20,5 +20,7 @@ export default {
       },
     ],
   ],
+  coverageReporters: [['lcovonly', { projectRoot: 'server/' }]],
+  coverageDirectory: 'test_results/jest',
   moduleFileExtensions: ['web.js', 'js', 'json', 'node', 'ts'],
 }
