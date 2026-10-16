@@ -18,4 +18,4 @@ generic-service:
     PRIVACY: "https://probation-frontend-components.hmpps.service.justice.gov.uk/privacy-policy"
     MANAGE_PEOPLE_ON_PROBATION_URL: 'https://manage-people-on-probation.hmpps.service.justice.gov.uk'
 generic-prometheus-alerts:
-  alertSeverity: manage-people-on-probation-alerts
+  alertSeverityOverride: manage-people-on-probation-alerts

@@ -20,4 +20,4 @@ generic-service:
     MANAGE_PEOPLE_ON_PROBATION_URL: 'https://manage-people-on-probation-preprod.hmpps.service.justice.gov.uk'
 
 generic-prometheus-alerts:
-  alertSeverity: manage-people-on-probation-alerts-nonpro
+  alertSeverityOverride: manage-people-on-probation-alerts-nonpro
