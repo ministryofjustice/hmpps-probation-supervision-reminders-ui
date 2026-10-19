@@ -35,7 +35,7 @@
     "@js-joda/core": "6.3.0",
     "@js-joda/locale": "5.3.2",
     "@js-joda/locale_en": "5.3.2",
-    "@js-joda/timezone": "2.26.0",
+    "@js-joda/timezone": "3.1.0",
     "@microsoft/applicationinsights-clickanalytics-js": "^3.4.5",
     "@microsoft/applicationinsights-web": "^3.4.5",
     "@ministryofjustice/frontend": "^11.1.0",
