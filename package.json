@@ -120,12 +120,11 @@
     "handlebars": "^4.7.10"
   },
   "allowScripts": {
-    "@parcel/watcher@2.5.6": true,
     "dtrace-provider@0.8.8": true,
     "esbuild@0.28.2": true,
     "fsevents@2.3.3": true,
-    "fsevents@2.3.2": true,
-    "unrs-resolver@1.11.1": true,
-    "protobufjs@7.6.5": true
+    "@parcel/watcher@2.6.0": true,
+    "protobufjs@7.6.6": true,
+    "unrs-resolver@1.12.2": true
   }
 }
